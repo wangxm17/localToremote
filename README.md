@@ -1,6 +1,6 @@
 # myproject
-
-> first project
+>欢迎一起学习交流，
+> 该项目比较基础。适合初学者，里面仅配置好了路由，还有基本布局
 
 ## Build Setup
 
