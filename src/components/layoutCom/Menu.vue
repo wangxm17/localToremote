@@ -4,12 +4,12 @@
     @select="menuSelect"
   >
     <el-submenu index="1">
-      <template slot="title"><i class="el-icon-message"></i>导航一</template>
+      <template slot="title"><i class="el-icon-menu"></i>导航一</template>
       <el-menu-item index="/shouye/index">首页</el-menu-item>
       <el-menu-item index="/home/index">文本</el-menu-item>
     </el-submenu>
     <el-submenu index="2">
-      <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+      <template slot="title"><i class="el-icon-message"></i>导航二</template>
     </el-submenu>
     <el-submenu index="3">
       <template slot="title"><i class="el-icon-setting"></i>导航三</template>

@@ -10,7 +10,7 @@
         <Header style="margin-top: 20px"/>
       </el-header>
       <!--主内容-->
-      <el-main style="padding: 20px">
+      <el-main>
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -28,14 +28,7 @@
         Header
       },
       data() {
-        const item = {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        };
-        return {
-          tableData: Array(20).fill(item)
-        }
+
       },
       methods: {
         handleOpen(key, keyPath) {
@@ -48,5 +41,8 @@
     }
 </script>
 
-<style scoped>
+<style>
+  .el-main{
+    padding: 0px;
+  }
 </style>
