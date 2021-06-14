@@ -5,8 +5,8 @@
   >
     <el-submenu index="1">
       <template slot="title"><i class="el-icon-menu"></i>导航一</template>
-      <el-menu-item index="/shouye/index">首页</el-menu-item>
-      <el-menu-item index="/home/index">文本</el-menu-item>
+      <el-menu-item index="/index/shouye">首页</el-menu-item>
+      <el-menu-item index="/index/home">文本</el-menu-item>
     </el-submenu>
     <el-submenu index="2">
       <template slot="title"><i class="el-icon-message"></i>导航二</template>

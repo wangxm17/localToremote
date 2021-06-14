@@ -1,26 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layouts from '@/components/Layouts.vue'
+import loginIn from '@/views/login/login.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/index',
       name: 'Layouts',
       component: Layouts,
       children: [
         {
-          path: 'home/index',
+          path: 'home',
           component: () => import('@/components/HelloWorld')
         },
         /*首页*/
         {
-          path: 'shouye/index',
+          path: 'shouye',
           component: () => import('@/views/shouye/index')
         }
       ]
+    },
+    /*登录*/
+    {
+      path: '/',
+      name: 'login',
+      component: loginIn
     }
   ]
 })

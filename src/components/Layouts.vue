@@ -28,7 +28,9 @@
         Header
       },
       data() {
+        return {
 
+        };
       },
       methods: {
         handleOpen(key, keyPath) {
