@@ -20,6 +20,11 @@ export default new Router({
         {
           path: 'shouye',
           component: () => import('@/views/shouye/index')
+        },
+        /*用户表*/
+        {
+          path: 'user',
+          component: () => import('@/views/User/userTable')
         }
       ]
     },
