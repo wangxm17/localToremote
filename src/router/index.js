@@ -25,6 +25,11 @@ export default new Router({
         {
           path: 'user',
           component: () => import('@/views/User/userTable')
+        },
+        /*地图*/
+        {
+          path: 'map',
+          component: () => import('@/views/map/map')
         }
       ]
     },
