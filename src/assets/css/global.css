@@ -1,0 +1,10 @@
+.AppBackground{
+  padding: 20px;
+  /*background-color: rgb(240, 242, 245);*/
+  height: 100%;
+}
+.pagination{
+  margin-top: 20px;
+  /*text-align: center;*/
+  float: right;
+}
