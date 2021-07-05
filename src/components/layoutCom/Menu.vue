@@ -3,17 +3,19 @@
     :default-openeds="['1', '3']"
     @select="menuSelect"
   >
-    <el-submenu index="1">
-      <template slot="title"><i class="el-icon-menu"></i>导航一</template>
-      <el-menu-item index="/index/shouye">首页</el-menu-item>
-      <el-menu-item index="/index/home">文本</el-menu-item>
-      <el-menu-item index="/index/map">地图</el-menu-item>
-      <el-menu-item index="/index/user">用户管理</el-menu-item>
-    </el-submenu>
+    <el-menu-item index="/index/shouye"><template slot="title"><i class="el-icon-menu"></i>首页</template></el-menu-item>
     <el-submenu index="2">
-      <template slot="title"><i class="el-icon-message"></i>导航二</template>
+      <template slot="title"><i class="el-icon-setting"></i>系统管理</template>
+<!--      <el-menu-item index="/index/shouye">首页</el-menu-item>-->
+<!--      <el-menu-item index="/index/home">文本</el-menu-item>-->
+<!--      <el-menu-item index="/index/map">地图</el-menu-item>-->
+      <el-menu-item index="/index/user">用户管理</el-menu-item>
+      <el-menu-item index="/index/role">角色管理</el-menu-item>
     </el-submenu>
     <el-submenu index="3">
+      <template slot="title"><i class="el-icon-message"></i>导航二</template>
+    </el-submenu>
+    <el-submenu index="4">
       <template slot="title"><i class="el-icon-setting"></i>导航三</template>
     </el-submenu>
   </el-menu>
