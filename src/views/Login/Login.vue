@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import request from '@/api/request';
     export default {
       name: "LoginIn",
       data() {
@@ -51,6 +52,7 @@
           pwdType: 'password', // 密码类型
           openeye: require('@/assets/view.png'), //图片地址
           nopeneye: require('@/assets/view_off.png'), //图片地址
+          userToken:''
         };
       },
       methods: {
@@ -60,6 +62,10 @@
           this.seen = !this.seen;//小眼睛的变化
         },
         toIndex() {
+          this.userToken = 'Bearer ' + 'yitoewhoitfho'
+          this.$store.commit('setToken',JSON.stringify(this.userToken));//设置tokon
+          // this.$store.commit('setChildren',JSON.stringify(this.userToken));//设置tokon
+
           this.$router.push({ path: '/index/shouye', query: this.otherQuery })
         }
       }

@@ -6,6 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import "./assets/css/global.css"  //引入全局样式
+import store from './store/index'
 
 // import axios from 'axios'
 
@@ -13,10 +14,12 @@ import "./assets/css/global.css"  //引入全局样式
 Vue.use(ElementUI);
 import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
+Vue.prototype.$store = store
 
 new Vue({
   el: '#app',
   router,
+  // store,
   components: { App },
   template: '<App/>'
 })

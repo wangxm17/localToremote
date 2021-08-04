@@ -22,6 +22,8 @@
       },
       methods: {
         LoginOut() {
+          // localStorage.clear()
+          localStorage.removeItem('token')
           this.$router.push({ path: '/', query: this.otherQuery })
         }
       }

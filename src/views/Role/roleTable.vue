@@ -2,6 +2,7 @@
   <el-container class="AppBackground">
     <el-header style="text-align:center;">
       <p style="font-size:24px;">角色管理</p>
+<!--      <span>{{products}}</span>-->
     </el-header>
     <el-header>
       <el-form :inline="true" :model="selectFrom" class="demo-form-inline">
@@ -97,8 +98,18 @@
           },
         }
       },
+      computed: {
+        products() {
+          return this.$store.state.products
+        },
+        saleProducts() {
+          return this.$store.getters.saleProducts; // 通过this.$store.getters将函数return出去
+        }
+      },
       mounted() {
         this.page()
+        console.log(this.$store.getters.saleProducts)
+        console.log(this.$store.getters.getToken)
       },
       methods:{
         page(pageNum){

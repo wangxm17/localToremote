@@ -8,7 +8,7 @@
       <template slot="title"><i class="el-icon-setting"></i>系统管理</template>
 <!--      <el-menu-item index="/index/shouye">首页</el-menu-item>-->
 <!--      <el-menu-item index="/index/home">文本</el-menu-item>-->
-<!--      <el-menu-item index="/index/map">地图</el-menu-item>-->
+      <el-menu-item index="/index/map">地图</el-menu-item>
       <el-menu-item index="/index/user">用户管理</el-menu-item>
       <el-menu-item index="/index/role">角色管理</el-menu-item>
     </el-submenu>
