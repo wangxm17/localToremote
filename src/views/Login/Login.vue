@@ -64,8 +64,7 @@ import request from '@/api/request';
         toIndex() {
           this.userToken = 'Bearer ' + 'yitoewhoitfho'
           this.$store.commit('setToken',JSON.stringify(this.userToken));//设置tokon
-          // this.$store.commit('setChildren',JSON.stringify(this.userToken));//设置tokon
-
+          // this.$store.commit('setChildren',JSON.stringify(this.userToken));
           this.$router.push({ path: '/index/shouye', query: this.otherQuery })
         }
       }
