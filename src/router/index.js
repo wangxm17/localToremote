@@ -44,48 +44,48 @@ var routers = new Router({
   console.log(hrh)
   routers.addRoutes(hrh)
 })*/
-export default routers;
+// export default routers;
 
 
-/*export default new Router({
+export default new Router({
   routes: [
     {
       path: '/index',
       name: 'Layouts',
       component: Layouts,
-      children : store.state.childrenList
+      // children : store.state.childrenList
       children: [
         {
           path: 'home',
           component: () => import('@/components/HelloWorld')
         },
-        /!*首页*!/
+        /*首页*/
         {
           path: 'shouye',
           component: () => import('@/views/shouye/index')
         },
-        /!*用户表*!/
+        /*用户表*/
         {
           path: 'user',
           component: () => import('@/views/User/userTable')
         },
-        /!*角色表*!/
+        /*角色表*/
         {
           path: 'role',
           component: () => import('@/views/Role/roleTable')
         },
-        /!*地图*!/
+        /*地图*/
         {
           path: 'map',
           component: () => import('@/views/map/map')
         }
       ]
     },
-    /!*登录*!/
+    /*登录*/
     {
       path: '/',
       name: 'login',
       component: loginIn
     }
   ]
-})*/
+})
