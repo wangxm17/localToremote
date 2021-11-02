@@ -32,12 +32,61 @@
 
         };
       },
+      created() {
+        this.treeData()
+      },
       methods: {
         handleOpen(key, keyPath) {
           console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
           console.log(key, keyPath);
+        },
+        treeData(){
+          let childrenList = [
+            {
+              path: '/index',
+              name: '系统管理',
+              component: () => import('@/components/Layouts'),
+              children: [
+                {
+                  path: 'home',
+                  name: 'HelloWorld',
+                  component: () => import('@/components/HelloWorld')
+                },
+                {
+                  path: 'user',
+                  name: '用户表',
+                  component: () => import('@/views/User/userTable')
+                },
+                {
+                  path: 'role',
+                  name: '角色表',
+                  component: () => import('@/views/Role/roleTable')
+                },
+                {
+                  path: 'map',
+                  name: '地图',
+                  component: () => import('@/views/map/map')
+                }
+              ]
+            },
+            {
+              path: '/One',
+              name: '一级无子菜单',
+              component: () => import('@/components/Layouts'),
+              children: [
+                {
+                  path: 'shouye',
+                  name: '首页',
+                  component: () => import('@/views/shouye/index')
+                }
+              ]
+            }
+          ]
+          //动态从后端获取路由
+          this.$router.addRoutes(childrenList);
+          this.$store.commit('setChildren', childrenList);
         }
       }
     }
