@@ -2,6 +2,14 @@ import request from '@/api/request';
 
 export default {
 
+  //菜单字典
+  menuDict(){
+    return request({
+      url: `/api/DictType/menuDict`,
+      method: 'post',
+    })
+  },
+
   //查询角色分页
   page(params){
     return request({
@@ -45,6 +53,21 @@ export default {
       method: 'post',
       data:params
     })
-  }
+  },
+  /*****************************权限配置*****************************/
+  //rid查询全部pid
+  selectPidByRid(rid){
+    return request({
+      url: `/api/RolePermission/selectPidByRid?rid=`+rid,
+      method: 'post'
+    })
+  },
 
+  //根据rid权限配置
+  editByRid(rid,allPid){
+    return request({
+      url: `/api/RolePermission/editByRid?rid=`+rid+'&&allPid='+allPid,
+      method: 'post'
+    })
+  },
 }

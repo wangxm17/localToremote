@@ -86,6 +86,11 @@
                 component: () => import('@/views/Role/roleTable')
               },
               {
+                path: 'menu',
+                name: '菜单表',
+                component: () => import('@/views/Menu/menuTable')
+              },
+              {
                 path: 'map',
                 name: '地图',
                 component: () => import('@/views/map/map')

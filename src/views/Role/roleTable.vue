@@ -40,6 +40,7 @@
               <el-button slot="reference" type="danger" size="small" icon="el-icon-delete" circle></el-button>
             </el-popconfirm>
             <el-button @click="editOpen(scope.row)" type="primary" size="small" icon="el-icon-edit" circle ></el-button>
+            <el-button @click="keyOpen(scope.row)" type="warning" size="small" icon="el-icon-key" circle ></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,6 +69,23 @@
         <el-button @click="addOrEditClose" size="mini">取消</el-button>
       </div>
     </el-dialog>
+    <el-dialog :title="keyTitle" :visible.sync="keyVisible" @close="addOrEditClose()" :close-on-click-modal="false" width="30%">
+      <div>
+        <el-tree
+          :data="menuList"
+          show-checkbox
+          default-expand-all
+          node-key="id"
+          ref="tree"
+          highlight-current
+          :props="defaultProps">
+        </el-tree>
+      </div>
+      <div style="text-align: center;margin-top: 7%">
+        <el-button type="primary" @click="keySubmit" size="mini">保存</el-button>
+        <el-button @click="keyClose" size="mini">取消</el-button>
+      </div>
+    </el-dialog>
   </el-container>
 </template>
 
@@ -94,8 +112,17 @@
             id: '',
             roleName:'',
             describtion:'',
-            createTime:''
+            createTime:'',
+            updateTime:''
           },
+          //权限配置
+          keyTitle:'权限配置', //弹窗标题
+          keyVisible: false,  //弹窗是否显示
+          menuList:[],//菜单字典
+          defaultProps: { //菜单默认参数
+            children: 'childMenus',
+            label: 'name'
+          }
         }
       },
       computed: {
@@ -106,12 +133,20 @@
           return this.$store.getters.saleProducts; // 通过this.$store.getters将函数return出去
         }
       },
+      created() {
+        this.menuDict()
+      },
       mounted() {
         this.page()
         console.log(this.$store.getters.saleProducts)
         console.log(this.$store.getters.getToken)
       },
       methods:{
+        menuDict(){
+          role.menuDict({}).then((res) => {
+            this.menuList = res.data
+          })
+        },
         page(pageNum){
           if (pageNum == null || pageNum == '') {
             pageNum = 1
@@ -199,7 +234,25 @@
         handleCurrentChange(val) {
           // console.log(`当前页: ${val}`);
           this.page(val)
-        }
+        },
+        /*****************************权限管理*****************************/
+        keyOpen(row){
+          role.selectPidByRid(row.id).then((res) => {
+            this.keyTitle = '权限配置'
+            this.keyVisible = true
+            this.$nextTick(() => {
+              this.$refs.tree.setCheckedKeys(res.data);
+            });
+          })
+        },
+        keySubmit(){
+          console.log(this.$refs.tree.getCheckedKeys());
+        },
+        keyClose(){
+          this.$refs.tree.setCheckedKeys([]);
+          this.keyVisible = false
+        },
+
       }
     }
 </script>

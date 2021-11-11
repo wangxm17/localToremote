@@ -12,19 +12,62 @@ export default {
 
   //路由
   getRouter(){
-    // return request({
-    //   url: `/api/Permission/getRouter`,
-    //   method: 'post'
-    // })
-    let tset;
-    request({
-        url: `/api/Permission/getRouter`,
-        method: 'post'
-    }).then((res) => {
-      console.log(res)
-      tset = res
-      // return res
+    return request({
+      url: `/api/Permission/getRouter`,
+      method: 'post'
     })
-    return tset
+  },
+
+  //父级字典
+  fatherDict(){
+    return request({
+      url: `/api/DictType/fatherDict`,
+      method: 'post'
+    })
+  },
+
+  //查询分页
+  page(params){
+    return request({
+      url: `/api/Permission/pageTwo`,
+      method: 'post',
+      data:params
+    })
+  },
+
+  //详情
+  selectByPrimaryKey(params){
+    return request({
+      url: `/api/Permission/selectByPrimaryKey`,
+      method: 'post',
+      data:params
+    })
+  },
+
+  //新增
+  insert(params){
+    return request({
+      url: `/api/Permission/insert`,
+      method: 'post',
+      data:params
+    })
+  },
+
+  //编辑
+  updateByPrimaryKey(params){
+    return request({
+      url: `/api/Permission/updateByPrimaryKey`,
+      method: 'post',
+      data:params
+    })
+  },
+
+  //删除
+  deleteByPrimaryKey(params){
+    return request({
+      url: `/api/Permission/deleteByPrimaryKey`,
+      method: 'post',
+      data:params
+    })
   }
 }

@@ -2,6 +2,14 @@ import request from '@/api/request';
 
 export default {
 
+  //角色字典
+  roleDict(){
+    return request({
+      url: `/api/DictType/roleDict`,
+      method: 'post'
+    })
+  },
+
   //查询用户分页
   page(params){
     return request({

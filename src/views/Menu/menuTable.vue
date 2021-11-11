@@ -1,20 +1,20 @@
 <template>
   <el-container class="AppBackground">
     <el-header style="text-align:center;">
-      <p style="font-size:24px;">用户管理</p>
+      <p style="font-size:24px;">菜单管理</p>
     </el-header>
     <el-header>
       <el-form :inline="true" :model="selectFrom" class="demo-form-inline">
-        <el-form-item label="用户名:">
-          <el-input v-model="selectFrom.userName" placeholder="用户名"></el-input>
-        </el-form-item>
+        <!--<el-form-item label="菜单名:">
+          <el-input v-model="selectFrom.roleName" placeholder="角色名"></el-input>
+        </el-form-item>-->
         <el-form-item>
-          <el-tooltip content="查询" placement="top">
+          <!--<el-tooltip content="查询" placement="top">
             <el-button type="primary" @click="page()" circle><i class="el-icon-search"></i></el-button>
           </el-tooltip>
           <el-tooltip content="置空" placement="top">
             <el-button type="info" @click="reset()" circle><i class="el-icon-brush"></i></el-button>
-          </el-tooltip>
+          </el-tooltip>-->
           <el-tooltip content="新增" placement="top">
             <el-button type="success" @click="addOpen" circle><i class="el-icon-plus"></i></el-button>
           </el-tooltip>
@@ -27,10 +27,22 @@
         style="width: 100%"
         border
         size="medium"
+        row-key="id"
+        default-expand-all
+        :tree-props="{children: 'childMenus', hasChildren: 'hasChildren'}">
       >
         <el-table-column type="index" align="center" label="序号"  width="60"></el-table-column>
-        <el-table-column prop="userName" align="center" label="姓名"></el-table-column>
-        <el-table-column prop="password" align="center" label="密码"></el-table-column>
+        <el-table-column prop="name" align="left" label="菜单名"></el-table-column>
+        <el-table-column  align="center" label="图标">
+          <template slot-scope="scope">
+            <i :class="scope.row.iconcls"/>
+            <!--<el-tag size="medium" effect="plain">
+              <i :class="scope.row.iconcls"/>
+            </el-tag>-->
+          </template>
+        </el-table-column>
+        <el-table-column prop="path" align="center" label="路由path"></el-table-column>
+        <el-table-column prop="url" align="center" label="文件路径"></el-table-column>
         <el-table-column prop="createTime" align="center" label="创建时间"></el-table-column>
         <el-table-column prop="updateTime" align="center" label="更新时间"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
@@ -53,37 +65,55 @@
         :total="total">
       </el-pagination>
     </el-main>
-    <el-dialog :title="addOrEditTitle" :visible.sync="addOrEditVisible" @close="addOrEditClose()" :close-on-click-modal="false" width="35%">
-      <el-form :inline="true" :model="addOrEditFrom" class="demo-form-inline" size="mini">
-        <el-form-item label="用户名:">
-          <el-input v-model="addOrEditFrom.userName" placeholder="用户名"></el-input>
+    <el-dialog :title="addOrEditTitle" :visible.sync="addOrEditVisible" @close="addOrEditClose()" :close-on-click-modal="false" width="30%">
+      <el-form :model="addOrEditFrom" class="demo-form-inline" size="mini" label-width="30%">
+        <el-form-item label="菜单名:">
+          <el-input v-model="addOrEditFrom.name" placeholder="菜单名"></el-input>
         </el-form-item>
-        <el-form-item label="密码:">
-          <el-input v-model="addOrEditFrom.password" placeholder="密码"></el-input>
-        </el-form-item>
-        <el-form-item label="角色:">
-          <el-select v-model="addOrEditFrom.roleIds" multiple placeholder="请选择">
+        <el-form-item label="父级:">
+          <el-select v-model="addOrEditFrom.fatherid" placeholder="请选择父级">
             <el-option
-              v-for="item in roleList"
+              v-for="item in fatherList"
               :key="item.id"
-              :label="item.roleName"
+              :label="item.fatherName"
               :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="addOrEditSubmit" size="mini">保存</el-button>
-          <el-button @click="addOrEditClose" size="mini">取消</el-button>
+        <el-form-item label="图标:">
+          <el-tag size="medium" v-show="addOrEditFrom.iconcls" @close="addOrEditIconclsClose()" closable>
+            <i :class="addOrEditFrom.iconcls"/>
+          </el-tag>
+          <el-tooltip placement="bottom" effect="light">
+            <div slot="content">
+              <div style="width: 700px">
+                <el-button v-for="item in iconclsList" :class="item" size="mini" @click="addOrEditIconcls(item)"></el-button>
+              </div>
+            </div>
+            <el-button >选择图标</el-button>
+          </el-tooltip>
+        </el-form-item>
+        <el-form-item label="路由path:">
+          <el-input v-model="addOrEditFrom.path" placeholder="路由path"></el-input>
+        </el-form-item>
+        <el-form-item label="文件路径:">
+          <el-input v-model="addOrEditFrom.url" placeholder="文件路径"></el-input>
         </el-form-item>
       </el-form>
+      <div style="text-align: center">
+        <el-button type="primary" @click="addOrEditSubmit" size="mini">保存</el-button>
+        <el-button @click="addOrEditClose" size="mini">取消</el-button>
+      </div>
     </el-dialog>
   </el-container>
 </template>
 
 <script>
-  import user from "@/api/user";
+  import role from "@/api/role";
+  import menu from "@/api/menu";
+  import iconclsList from "../../api/iconcls";
   export default {
-    name: "userTable",
+    name: "menuTable",
     data() {
       return {
         //分页参数
@@ -94,39 +124,45 @@
         tableData:[],
         //查询参数
         selectFrom:{
-          userName:''
+          roleName:''
         },
         //新增|修改参数
         addOrEditTitle: '新增',  //弹窗标题
         addOrEditVisible: false,  //弹窗是否显示
-        addOrEditFrom:{   //新增|修改参数
+        addOrEditFrom:{   //新增参数
           id: '',
-          userName:'',
-          password:'',
           createTime:'',
           updateTime:'',
-          roleIds:[],
+          name:'',
+          fatherid:'',
+          iconcls:'',
+          path:'',
+          url:'',
         },
-        roleList:[],//角色字典
-        options: [{
-          id: '1',
-          roleName: '普通用户'
-        }, {
-          id: '227e6710-1666-4c90-9303-e5a0a0c7548e',
-          roleName: '超级管理员'
-        }],
+        tset:'el-icon-s-tools',
+        fatherList:[],//父级字典
+        iconclsList:[],//图标字典
+      }
+    },
+    computed: {
+      products() {
+        return this.$store.state.products
+      },
+      saleProducts() {
+        return this.$store.getters.saleProducts; // 通过this.$store.getters将函数return出去
       }
     },
     created() {
-      this.roleDict()
+      this.iconclsList = iconclsList
+      this.fatherDict()
     },
     mounted() {
       this.page()
     },
     methods:{
-      roleDict(){
-        user.roleDict({}).then((res) => {
-          this.roleList = res.data
+      fatherDict(){
+        menu.fatherDict({}).then((res) => {
+          this.fatherList = res.data
         })
       },
       page(pageNum){
@@ -134,10 +170,9 @@
           pageNum = 1
         }
         this.pageNum = pageNum
-        user.page({
+        menu.page({
           pageNum: this.pageNum,
-          pageSize: this.pageSize,
-          userName: this.selectFrom.userName
+          pageSize: this.pageSize
         }).then((res) => {
           this.tableData = res.data
           this.total = res.total
@@ -145,7 +180,7 @@
       },
       reset(){
         this.selectFrom = {
-          userName:''
+          roleName:''
         }
         this.page()
       },
@@ -153,8 +188,14 @@
         this.addOrEditTitle = '新增'
         this.addOrEditVisible = true
       },
+      addOrEditIconcls(item){
+        this.addOrEditFrom.iconcls = item
+      },
+      addOrEditIconclsClose(){
+        this.addOrEditFrom.iconcls = ''
+      },
       editOpen(row){
-        user.selectByPrimaryKey({
+        menu.selectByPrimaryKey({
           id:row.id
         }).then((res) => {
           this.addOrEditFrom = res.data
@@ -163,15 +204,24 @@
         })
       },
       addOrEditSubmit(){
+        if(!this.addOrEditFrom.id){
+          delete this.addOrEditFrom.id
+        }
+        else if(!this.addOrEditFrom.roleName){
+          delete this.addOrEditFrom.roleName
+        }
+        else if(!this.addOrEditFrom.describtion){
+          delete this.addOrEditFrom.describtion
+        }else {}
         if(this.addOrEditTitle == '新增'){
-          user.insert(this.addOrEditFrom).then((res) => {
+          menu.insert(this.addOrEditFrom).then((res) => {
             this.$message.success('新增成功！');
             this.addOrEditClose()
             this.page()
           })
         }
         else if(this.addOrEditTitle == '编辑'){
-          user.updateByPrimaryKey(this.addOrEditFrom).then((res) => {
+          menu.updateByPrimaryKey(this.addOrEditFrom).then((res) => {
             this.$message.success('编辑成功！');
             this.addOrEditClose()
             this.page()
@@ -182,14 +232,17 @@
         this.addOrEditVisible = false
         this.addOrEditFrom ={
           id: '',
-          userName:'',
-          password:'',
           createTime:'',
-          roleIds:[],
+          updateTime:'',
+          name:'',
+          fatherid:'',
+          iconcls:'',
+          path:'',
+          url:'',
         }
       },
       deleteByPrimaryKey(row){
-        user.deleteByPrimaryKey({
+        menu.deleteByPrimaryKey({
           id:row.id
         }).then((res) => {
           this.$message.success('已删除！');
