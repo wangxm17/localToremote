@@ -118,6 +118,7 @@
           //权限配置
           keyTitle:'权限配置', //弹窗标题
           keyVisible: false,  //弹窗是否显示
+          keyFromRid:'',//权限配置角色id缓存
           menuList:[],//菜单字典
           defaultProps: { //菜单默认参数
             children: 'childMenus',
@@ -237,6 +238,7 @@
         },
         /*****************************权限管理*****************************/
         keyOpen(row){
+          this.keyFromRid = row.id
           role.selectPidByRid(row.id).then((res) => {
             this.keyTitle = '权限配置'
             this.keyVisible = true
@@ -246,9 +248,15 @@
           })
         },
         keySubmit(){
-          console.log(this.$refs.tree.getCheckedKeys());
+          let allPid = this.$refs.tree.getCheckedKeys()
+          role.editByRid(this.keyFromRid,allPid).then((res) => {
+            this.keyClose()
+            this.$message.success('权限配置成功！');
+          })
+          // console.log(this.$refs.tree.getCheckedKeys());
         },
         keyClose(){
+          this.keyFromRid = ''
           this.$refs.tree.setCheckedKeys([]);
           this.keyVisible = false
         },
