@@ -35,7 +35,7 @@
             <i :class="item.icon"></i>
             {{item.name}}
           </template>
-          <el-menu-item v-for="subItem in item.children" :index="subItem.index">
+          <el-menu-item v-for="subItem in item.children" :index="subItem.index" :key="subItem.index">
             <template slot="title">
               <i :class="subItem.icon"></i>
               <span>{{subItem.name}}</span>

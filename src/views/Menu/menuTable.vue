@@ -87,7 +87,7 @@
           <el-tooltip placement="bottom" effect="light">
             <div slot="content">
               <div style="width: 700px">
-                <el-button v-for="item in iconclsList" :class="item" size="mini" @click="addOrEditIconcls(item)"></el-button>
+                <el-button v-for="item in iconclsList" :key="item" :class="item" size="mini" @click="addOrEditIconcls(item)"></el-button>
               </div>
             </div>
             <el-button >选择图标</el-button>
