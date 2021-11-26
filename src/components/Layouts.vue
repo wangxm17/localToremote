@@ -86,7 +86,7 @@
           ]
           //动态从后端获取路由
           this.$router.addRoutes(childrenList);
-          this.$store.commit('setChildren', childrenList);
+          // this.$store.commit('setChildren', childrenList);
         }
       }
     }

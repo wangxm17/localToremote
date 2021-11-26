@@ -101,6 +101,7 @@
     },
     created() {
       this.treeData()
+      console.log(this.menuListOne)
     },
     methods: {
       handleOpen(key, keyPath) {

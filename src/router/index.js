@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layouts from '@/components/Layouts'
 import loginIn from '@/views/login/login'
-import store from '@/store/index'
+// import store from '@/store/index'
 import menu from "@/api/menu";
 
 Vue.use(Router)

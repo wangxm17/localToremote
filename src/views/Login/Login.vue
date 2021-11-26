@@ -27,6 +27,23 @@
           id="tubiao2"
         >
       </el-form-item>
+      <el-form-item>
+        <el-row>
+          <el-col :span="16">
+            <el-input
+              v-model="loginForm.password"
+            ></el-input>
+          </el-col>
+          <el-col :span="8">
+            <img
+              style="border: cadetblue solid 1px;height: 40px;"
+              :src="codeUrl"
+              alt=""
+              @click="getCode()"
+            >
+          </el-col>
+        </el-row>
+      </el-form-item>
       <el-form>
         <el-button @click.prevent="toIndex">登录</el-button>
         <el-button @click.prevent="toIndex">注册</el-button>
@@ -37,7 +54,7 @@
 </template>
 
 <script>
-  import request from '@/api/request';
+  import login from "@/api/system/login";
   export default {
     name: "LoginIn",
     data() {
@@ -52,8 +69,12 @@
         pwdType: 'password', // 密码类型
         openeye: require('@/assets/view.png'), //图片地址
         nopeneye: require('@/assets/view_off.png'), //图片地址
+        codeUrl:'',//验证码
         userToken: ''
       };
+    },
+    mounted() {
+      this.getCode()
     },
     methods: {
       //点击小眼睛，密码显示与否
@@ -61,9 +82,15 @@
         this.pwdType = this.pwdType === 'password' ? 'text' : 'password';
         this.seen = !this.seen;//小眼睛的变化
       },
+      //获取验证码
+      getCode(){
+        login.getCodeImg().then(response => {
+            this.codeUrl = window.URL.createObjectURL(response.data)
+        });
+      },
       toIndex() {
         this.userToken = 'Bearer ' + 'yitoewhoitfho'
-        this.$store.commit('setToken', JSON.stringify(this.userToken));//设置tokon
+        // this.$store.commit('setToken', JSON.stringify(this.userToken));//设置tokon
         let childrenList = [
           {
             path: '/index',
@@ -112,7 +139,7 @@
         ]
         //动态从后端获取路由
         this.$router.addRoutes(childrenList);
-        this.$store.commit('setChildren', childrenList);
+        // this.$store.commit('setChildren', childrenList);
         console.log()
         this.$router.push({path: '/One/shouye', query: this.otherQuery})
       }
@@ -127,7 +154,6 @@
   #tubiao1 {
     position: relative;
   }
-
   #tubiao2 {
     position: absolute;
     right: 5px;

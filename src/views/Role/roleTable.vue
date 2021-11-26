@@ -128,10 +128,10 @@
       },
       computed: {
         products() {
-          return this.$store.state.products
+          // return this.$store.state.products
         },
         saleProducts() {
-          return this.$store.getters.saleProducts; // 通过this.$store.getters将函数return出去
+          // return this.$store.getters.saleProducts; // 通过this.$store.getters将函数return出去
         }
       },
       created() {
@@ -139,8 +139,8 @@
       },
       mounted() {
         this.page()
-        console.log(this.$store.getters.saleProducts)
-        console.log(this.$store.getters.getToken)
+        // console.log(this.$store.getters.saleProducts)
+        // console.log(this.$store.getters.getToken)
       },
       methods:{
         menuDict(){

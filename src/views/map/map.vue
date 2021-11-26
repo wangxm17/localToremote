@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-<!--    <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>-->
-<!--    <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>-->
+    <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
+    <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>
 <!--    <div class="left_center_map" id="mapJson" :style="{height:'400px',width:'100%'}"></div>-->
-
-    <canvas id="canvas"/>
-    <canvas id="name"/>
+    <div id="mapContainer" :style="{height:'400px',width:'100%'}"></div>
+<!--    <canvas id="canvas"/>-->
+<!--    <canvas id="name"/>-->
   </div>
 </template>
 
@@ -13,7 +13,8 @@
   import * as d3geo from 'd3-geo'
   // import JSON from '@/assets/jiaxing.json'
   // import JSON from '@/assets/bengbu.json'
-  // import JSON from '@/assets/zgMap.json'
+  import JSON from '@/assets/zgMap.json'
+  import jinan from '@/assets/370100.json'
   import chinaJson from '@/assets/zgMap.json'
   import {provinceAndCityData} from 'element-china-area-data'
 
@@ -23,7 +24,7 @@
       return {
         options: provinceAndCityData,
         selectedOptions: [],
-
+        //3D地图
         scene: null, // 场景
         camera: null, // 摄像机
         renderer: null, // 渲染器
@@ -31,17 +32,18 @@
       }
     },
     mounted() {
-      // this.leftCenterMap()
+      this.leftCenterMap()
       // this.leftCenterMap2()
+      this.leftCenterMap3()
 
       // 初始化3D环境
-      this.initEnvironment()
-      // 构建光照系统
-      this.buildLightSystem()
-      // 构建辅助系统
-      this.buildAuxSystem()
-      this.initMap()
-      this.loop()
+      // this.initEnvironment()
+      // // 构建光照系统
+      // this.buildLightSystem()
+      // // 构建辅助系统
+      // this.buildAuxSystem()
+      // this.initMap()
+      // this.loop()
     },
     methods: {
       handleChange(value) {
@@ -89,6 +91,18 @@
       leftCenterMap2() {
         var myChart = this.$echarts.init(document.getElementById('mapJson')) // 拿到一个实例
         this.$echarts.registerMap('map', JSON, {})//引入地图文件
+        var option = {
+          series: [
+            {
+              type: 'map',
+              mapType: 'map'//地图名称
+            }]
+        }
+        myChart.setOption(option)
+      },
+      leftCenterMap3() {
+        var myChart = this.$echarts.init(document.getElementById('mapContainer')) // 拿到一个实例
+        this.$echarts.registerMap('map', jinan, {})//引入地图文件
         var option = {
           series: [
             {
