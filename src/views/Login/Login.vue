@@ -1,18 +1,18 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
       <div class="title-container">
         <h3 class="title">
           系统登录
         </h3>
       </div>
-      <el-form-item>
+      <el-form-item prop="username">
         <el-input
           prefix-icon="el-icon-user"
-          v-model="loginForm.name"
+          v-model="loginForm.username"
         ></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <el-input
           prefix-icon="el-icon-lock"
           v-model="loginForm.password"
@@ -27,11 +27,12 @@
           id="tubiao2"
         >
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="code">
         <el-row>
           <el-col :span="16">
             <el-input
-              v-model="loginForm.password"
+              v-model="loginForm.code"
+              maxlength="4"
             ></el-input>
           </el-col>
           <el-col :span="8">
@@ -45,7 +46,7 @@
         </el-row>
       </el-form-item>
       <el-form>
-        <el-button @click.prevent="toIndex">登录</el-button>
+        <el-button @click.prevent="handleLogin">登录</el-button>
         <el-button @click.prevent="toIndex">注册</el-button>
       </el-form>
     </el-form>
@@ -55,21 +56,32 @@
 
 <script>
   import login from "@/api/system/login";
+
   export default {
     name: "LoginIn",
     data() {
       return {
         otherQuery: "",
         loginForm: {
-          name: '',
-          password: '',
+          username: '',//账号
+          password: '',//密码
+          code: '',//验证码
+        },
+        loginRules: {
+          username: [
+            { required: true, trigger: "blur", message: "请输入您的账号" }
+          ],
+          password: [
+            { required: true, trigger: "blur", message: "请输入您的密码" }
+          ],
+          code: [{ required: true, trigger: "change", message: "请输入验证码" }]
         },
         passwordIcon: 'el-icon-view',
         seen: '',
         pwdType: 'password', // 密码类型
         openeye: require('@/assets/view.png'), //图片地址
         nopeneye: require('@/assets/view_off.png'), //图片地址
-        codeUrl:'',//验证码
+        codeUrl: '',//验证码
         userToken: ''
       };
     },
@@ -83,14 +95,28 @@
         this.seen = !this.seen;//小眼睛的变化
       },
       //获取验证码
-      getCode(){
+      getCode() {
         login.getCodeImg().then(response => {
-            this.codeUrl = window.URL.createObjectURL(response.data)
+          this.codeUrl = window.URL.createObjectURL(response.data)
         });
       },
+      handleLogin() {
+        this.$refs.loginForm.validate(valid => {
+          if(valid){
+            this.$store.dispatch("Login", this.loginForm).then(() => {
+              // this.$router.push({ path: this.redirect || "/" }).catch(()=>{});
+              this.$message.success("登录成功");
+              this.toIndex()
+            }).catch(res => {
+              // console.log(res)
+              this.$message.error(res);
+              this.getCode()
+            });
+          }
+
+        })
+      },
       toIndex() {
-        this.userToken = 'Bearer ' + 'yitoewhoitfho'
-        // this.$store.commit('setToken', JSON.stringify(this.userToken));//设置tokon
         let childrenList = [
           {
             path: '/index',
@@ -154,6 +180,7 @@
   #tubiao1 {
     position: relative;
   }
+
   #tubiao2 {
     position: absolute;
     right: 5px;
