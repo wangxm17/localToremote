@@ -31,6 +31,7 @@
         <el-row>
           <el-col :span="16">
             <el-input
+              @keyup.enter.native="handleLogin"
               v-model="loginForm.code"
               maxlength="4"
             ></el-input>
@@ -85,7 +86,11 @@
         userToken: ''
       };
     },
+    created() {
+      // window.addEventListener('keydown',this.handleLogin);
+    },
     mounted() {
+      // window.addEventListener('keydown',this.handleLogin);
       this.getCode()
     },
     methods: {

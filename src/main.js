@@ -11,11 +11,16 @@ import store from './store/index'
 // import axios from 'axios'
 
 // Vue.prototype.$http= axios
+//element
 Vue.use(ElementUI);
+//echarts
 import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
+//store
 Vue.prototype.$store = store
-
+//右击菜单
+import VueContextMenu from 'vue-contextmenu'
+Vue.use(VueContextMenu)
 new Vue({
   el: '#app',
   router,

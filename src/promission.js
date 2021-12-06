@@ -144,12 +144,6 @@ function saveObjArr(name, data) { //localStorage 存储数组对象的方法
 
 function getObjArr(name) { //localStorage 获取数组对象的方法
   return JSON.parse(window.localStorage.getItem(name));
-
-}
-
-function getObjArr(name) { //localStorage 获取数组对象的方法
-  return JSON.parse(window.localStorage.getItem(name));
-
 }
 
 function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
