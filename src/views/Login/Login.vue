@@ -134,6 +134,11 @@
                 component: () => import('@/components/HelloWorld')
               },
               {
+                path: 'homeOne',
+                name: 'HelloWorldOne',
+                component: () => import('@/components/HelloWorldOne')
+              },
+              {
                 path: 'user',
                 name: '用户表',
                 component: () => import('@/views/User/userTable')

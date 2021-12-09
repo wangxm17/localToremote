@@ -1,219 +1,103 @@
 <template>
-  <div class="hello" @contextmenu.prevent="showMenuOne()">
-    <el-col :span="4">
-      <el-tree
-        :data="data"
-        :props="defaultProps"
-        accordion
-        @node-click="handleNodeClick">
-      </el-tree>
-    </el-col>
-    <el-col
-      :span="20"
-      style="background-color: #42b983"
-    >
-      <vue-context-menu
-        :contextMenuData="contextMenuDataOne"
-        @savedata="savedata()"
-        @newdata="newdata()"
-      ></vue-context-menu>
-      <el-col :span="2" v-for="item in imgList" :key="item" style="margin-left: 20px">
-        <img
-          style="width: 80px;height:80px;text-align: center"
-          :src="imgUrl"
-          @click="inter()"
-          @contextmenu="showMenu(item)"
-        >
-        <p style="text-align: center">文件名</p>
-        <vue-context-menu
-          :contextMenuData="contextMenuData"
-          @savedata="savedata(item)"
-          @newdata="newdata(item)"
-        ></vue-context-menu>
-      </el-col>
-    </el-col>
+  <div id="app">
+    <div class="content">
+      <div class="drag-area" @dragover="fileDragover" @drop="fileDrop">
+        <div v-if="fileName" class="file-name">{{ fileName }}</div>
+        <!--<div v-else class="uploader-tips">
+          <span>将文件拖拽至此，或</span>
+          <label for="fileInput" style="color: #11A8FF; cursor: pointer">点此上传</label>
+        </div>-->
+      </div>
+    </div>
 
+    <div class="footer">
+<!--      <input type="file" id="fileInput" @change="chooseUploadFile" style="display: none;">-->
+<!--      <label for="fileInput" v-if="fileName" style="color: #11A8FF; cursor: pointer">选择文件</label>-->
+<!--      <button @click="uploadOk">提交</button>-->
+    </div>
   </div>
 </template>
 
 <script>
-const clickoutside = {
-  // 初始化指令
-  bind(el, binding, vnode) {
-    function documentHandler(e) {
-      // 这里判断点击的元素是否是本身，是本身，则返回
-      if (el.contains(e.target)) {
-        return false;
-      }
-      // 判断指令中是否绑定了函数
-      if (binding.expression) {
-        // 如果绑定了函数 则调用那个函数，此处binding.value就是handleClose方法
-        binding.value(e);
-      }
-    }
-    // 给当前元素绑定个私有变量，方便在unbind中可以解除事件监听
-    el.__vueClickOutside__ = documentHandler;
-    document.addEventListener('click', documentHandler);
-  },
-  update() {},
-  unbind(el, binding) {
-    // 解除事件监听
-    document.removeEventListener('click', el.__vueClickOutside__);
-    delete el.__vueClickOutside__;
-  },
-};
 export default {
   name: 'HelloWorld',
-  directives: {clickoutside},
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      imgUrl: require('@/assets/dir.png'), //图片地址
-      imgList: [0,1,2,3,4],
-
-      clickId:'',
-      // contextmenu data (菜单数据)
-      contextMenuData: {
-        menuName: 'demo',
-        // The coordinates of the display(菜单显示的位置)
-        axis: {
-          x: null,
-          y: null
-        },
-        // Menu options (菜单选项)
-        menulists: [{
-          fnHandler: 'savedata', // Binding events(绑定事件)
-          // icoName: 'fa fa-home fa-fw', // icon (icon图标 )
-          btnName: '重命名' // The name of the menu option (菜单名称)
-        }, {
-          fnHandler: 'newdata',
-          // icoName: 'fa fa-home fa-fw',
-          btnName: '删除'
-        }]
-      },
-      contextMenuDataOne: {
-        menuName: 'demoOne',
-        // The coordinates of the display(菜单显示的位置)
-        axis: {
-          x: null,
-          y: null
-        },
-        // Menu options (菜单选项)
-        menulists: [{
-          fnHandler: 'savedata', // Binding events(绑定事件)
-          // icoName: 'fa fa-home fa-fw', // icon (icon图标 )
-          btnName: '重命名111' // The name of the menu option (菜单名称)
-        }, {
-          fnHandler: 'newdata',
-          // icoName: 'fa fa-home fa-fw',
-          btnName: '删除111'
-        }]
-      },
-
-      data: [{
-        label: '一级 1',
-        children: [{
-          label: '二级 1-1',
-          children: [{
-            label: '三级 1-1-1'
-          }]
-        }]
-      }, {
-        label: '一级 2',
-        children: [{
-          label: '二级 2-1',
-          children: [{
-            label: '三级 2-1-1'
-          }]
-        }, {
-          label: '二级 2-2',
-          children: [{
-            label: '三级 2-2-1'
-          }]
-        }]
-      }, {
-        label: '一级 3',
-        children: [{
-          label: '二级 3-1',
-          children: [{
-            label: '三级 3-1-1'
-          }]
-        }, {
-          label: '二级 3-2',
-          children: [{
-            label: '三级 3-2-1'
-          }]
-        }]
-      }],
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      }
+      fileName: '',
+      batchFile: '',
+      MAX_FILE_SIZE: 10 * 1000 * 1000
     }
   },
-  methods:{
-    handleClose(e) {
-      this.show = false;
-    },
-    handleNodeClick(data) {
-      console.log(data);
-    },
-    /*showMenu:function(){
-      alert(2);
-    },*/
-    inter(){
-      this.imgList = [0,1]
-    },
-    retrunShouye(){
-      this.imgList = [0,1,2,3,4]
-    },
-    showMenuOne () {
-      // console.log("我运行了！")
-      event.preventDefault()
-      var x = event.clientX
-      var y = event.clientY
-      // Get the current location
-      this.contextMenuDataOne.axis = {
-        x, y
+  methods: {
+    // 点击上传
+    chooseUploadFile (e) {
+      const file = e.target.files.item(0)
+
+      if (!file) return
+      if (file.size > this.MAX_FILE_SIZE) {
+        return alert('文件大小不能超过10M')
       }
+
+      this.batchFile = file
+      this.fileName = file.name
+
+      // 清空，防止上传后再上传没有反应
+      e.target.value = ''
     },
-    showMenu (item) {
-      this.clickId = item
-      event.preventDefault()
-      var x = event.clientX
-      var y = event.clientY
-      // Get the current location
-      this.contextMenuData.axis = {
-        x, y
+    // 拖拽上传
+    fileDragover (e) {
+      e.preventDefault()
+    },
+    fileDrop (e) {
+      e.preventDefault()
+      const file = e.dataTransfer.files[0] // 获取到第一个上传的文件对象
+      console.log(file)
+      console.log('拖拽释放鼠标时')
+
+      if (!file) return
+      if (file.size > this.MAX_FILE_SIZE) {
+        return alert('文件大小不能超过10M')
       }
+
+      this.batchFile = file
+      this.fileName = file.name
     },
-    savedata (id) {
-      // alert(id)
-      console.log(this.clickId)
-    },
-    newdata (id) {
-      // alert(id)
-      console.log(this.clickId)
-      console.log('删除了!')
+    // 提交
+    uploadOk () {
+      if (this.batchFile === '') {
+        return alert('请选择要上传的文件')
+      }
+
+      let data = new FormData()
+      data.append('upfile', this.batchFile)
+      console.log(this.fileName)
+      // ajax
     }
   }
+
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  * {
+    font-size: 14px;
+  }
+  .drag-area {
+    height: 800px;
+    width: 800px;
+    background-color: #42b983;
+    border: dashed 1px gray;
+    margin-bottom: 10px;
+    color: #777;
+  }
+  .uploader-tips {
+    text-align: center;
+    height: 200px;
+    line-height: 200px;
+  }
+  .file-name {
+    text-align: center;
+    height: 200px;
+    line-height: 200px;
+  }
 </style>
