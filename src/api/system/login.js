@@ -19,7 +19,10 @@ export default {
 
   //获取用户详细信息
   getInfo(){
-
+    return request({
+      url: '/api/getInfo',
+      method: 'get'
+    })
   },
 
   //退出方法
@@ -29,11 +32,6 @@ export default {
 
   //获取验证码
   getCodeImg(){
-    // return request({
-    //   url: `/api/captchaImage`,
-    //   method: 'get',
-    //   responseType: 'blob'
-    // })
     return axios.get(
       '/api/captchaImage',
       {responseType: 'blob'}

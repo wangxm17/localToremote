@@ -53,7 +53,11 @@ const user = {
 
     // 获取用户信息
     GetInfo({ commit, state }) {
-
+      login.getInfo().then(res => {
+        resolve(res)
+      }).catch(error => {
+        // reject(error)
+      })
     },
 
     // 退出系统

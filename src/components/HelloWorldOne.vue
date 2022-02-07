@@ -1,20 +1,45 @@
 <template>
   <div class="hello">
     <el-col :span="4"><!--@contextmenu.stop="showMenu(item)"-->
-      <el-tree
+     <!-- //右击菜单
+      import VueContextMenu from 'vue-contextmenu'-->
+      <!--<el-tree
         :data="data"
         :props="defaultProps"
         accordion
         @node-click="handleNodeClick">
+      </el-tree>-->
+      <el-tree
+        :data="data"
+        ref="tree"
+        :props="defaultProps"
+        current-node-key="1"
+        node-key="id"
+        @node-click="nodeClick"
+        default-expand-all
+      >
+        <div class="custom-tree-node" slot-scope="{ node, data}">
+          <div>
+            <span v-if="!data.children||data.id=='0'">
+          <i class="el-icon-document" style="color: #fd7575"></i>
+        </span>
+            <span v-else>
+            <i :class="data.open ?  'el-icon-folder-opened' : 'el-icon-folder' " style="color: #448ac4"></i>
+        </span>
+            <!-- 名称 -->
+            <span>{{ node.label }}</span>
+            <i v-show="data.children" :class="data.open ?  'el-icon-caret-bottom' : 'el-icon-caret-top' " style="color: #448ac4;"></i>
+          </div>
+        </div>
       </el-tree>
     </el-col>
     <el-col
       :span="20"
     >
-      <div @dragover="fileDragover" @drop="fileDrop" @contextmenu="showMenuOne()" style="background-color: #42b983;height: 500px">
+      <div @dragover="fileDragover" @drop="fileDrop" @contextmenu.prevent="showMenuOne()" style="background-color: #42b983;height: 500px">
         <vue-context-menu
           :contextMenuData="contextMenuDataOne"
-          @savedata="savedata()"
+          @savedata="createdata()"
           @newdata="newdata()"
         ></vue-context-menu>
         <el-col :span="2" v-for="item in imgListOne" :key="item.name" style="margin-left: 20px" >
@@ -81,7 +106,7 @@ export default {
         // Menu options (菜单选项)
         menulists: [{
           fnHandler: 'savedata', // Binding events(绑定事件)
-          // icoName: 'fa fa-home fa-fw', // icon (icon图标 )
+          icoName: 'fa fa-home fa-fw', // icon (icon图标 )
           btnName: '重命名' // The name of the menu option (菜单名称)
         },
         //   {
@@ -102,7 +127,7 @@ export default {
         menulists: [{
           fnHandler: 'savedata', // Binding events(绑定事件)
           // icoName: 'fa fa-home fa-fw', // icon (icon图标 )
-          btnName: '测试1' // The name of the menu option (菜单名称)
+          btnName: '新建目录' // The name of the menu option (菜单名称)
         }, {
           fnHandler: 'newdata',
           // icoName: 'fa fa-home fa-fw',
@@ -110,44 +135,47 @@ export default {
         }]
       },
 
-      data: [{
-        label: '一级 1',
-        children: [{
-          label: '二级 1-1',
-          children: [{
-            label: '三级 1-1-1'
-          }]
-        }]
-      }, {
-        label: '一级 2',
-        children: [{
-          label: '二级 2-1',
-          children: [{
-            label: '三级 2-1-1'
-          }]
-        }, {
-          label: '二级 2-2',
-          children: [{
-            label: '三级 2-2-1'
-          }]
-        }]
-      }, {
-        label: '一级 3',
-        children: [{
-          label: '二级 3-1',
-          children: [{
-            label: '三级 3-1-1'
-          }]
-        }, {
-          label: '二级 3-2',
-          children: [{
-            label: '三级 3-2-1'
-          }]
-        }]
-      }],
+
+      defaultOpen: require('@/assets/dir.png'),
+      defaultClose: require('@/assets/logo.png'),
+      data: [
+        {
+          label: "我的调研",
+          open: true,
+          children: [
+            {
+              label: "基础信息"
+            }
+          ]
+        },
+        {
+          label: "你的调研",
+          open: true,
+          children: [
+            {
+              label: "采集系统"
+            },
+            {
+              label: "收集系统"
+            }
+          ]
+        },
+        {
+          label: "一级 3",
+          open: true,
+          children: [
+            {
+              label: "二级 3-1"
+            },
+            {
+              label: "二级 3-2"
+            }
+          ]
+        }
+      ],
       defaultProps: {
-        children: 'children',
-        label: 'label'
+        children: "children",
+        label: "label"
       }
     }
   },
@@ -184,6 +212,13 @@ export default {
         x, y
       }
     },
+    createdata () {
+      this.imgListOne.push({
+        id:'',
+        name:'新建文件夹('+this.imgListOne.length+')',
+        icon:''
+      })
+    },
     savedata (id) {
       // alert(id)
       console.log(this.clickId)
@@ -193,7 +228,9 @@ export default {
       console.log(this.clickId)
       console.log('删除了!')
     },
-
+    nodeClick(data, checked, node) {
+      data.open = !data.open;
+    },
     // 拖拽上传
     fileDragover (e) {
       e.preventDefault()
@@ -221,7 +258,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 h1, h2 {
   font-weight: normal;
 }
@@ -235,5 +272,76 @@ li {
 }
 a {
   color: #42b983;
+}
+
+
+/deep/ .el-tree {
+// 将每一行的设置为相对定位 方便后面before after 使用绝对定位来固定位置
+   .el-tree-node {
+     position: relative;
+     padding-left: 10px;
+   }
+// 子集像右偏移 给数线留出距离
+   .el-tree-node__children {
+     padding-left: 10px;
+   }
+//这是竖线
+  .el-tree-node :last-child:before {
+    height: 40px;
+  }
+.el-tree > .el-tree-node:before {
+  border-left: none;
+}
+.el-tree > .el-tree-node:after {
+  border-top: none;
+}
+//这自定义的线 的公共部分
+  .el-tree-node:before,
+  .el-tree-node:after {
+    content: "";
+    left: -4px;
+    position: absolute;
+    right: auto;
+    border-width: 1px;
+  }
+.tree :first-child .el-tree-node:before {
+  border-left: none;
+}
+// 竖线
+   /*.el-tree-node:before {
+     border-left: 1px solid #e3e3e3;
+     bottom: 0px;
+     height: 100%;
+     top: -25px;
+     width: 1px;
+   }*/
+//横线
+ /* .el-tree-node:after {
+    border-top: 1px solid #e3e3e3;
+    height: 20px;
+    top: 14px;
+    width: 24px;
+  }*/
+.el-tree-node__expand-icon.is-leaf {
+  width: 8px;
+}
+//去掉elementui自带的展开按钮  一个向下的按钮,打开时向右
+.el-tree-node__content > .el-tree-node__expand-icon {
+    display: none;
+  }
+//每一行的高度
+  .el-tree-node__content {
+    line-height: 30px;
+    height: 30px;
+  }
+}
+//去掉最上级的before  after 即是去电最上层的连接线
+  /deep/ .el-tree > div {
+&::before {
+   display: none;
+ }
+&::after {
+   display: none;
+ }
 }
 </style>

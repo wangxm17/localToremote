@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <div class="content">
-      <div class="drag-area" @dragover="fileDragover" @drop="fileDrop">
-        <div v-if="fileName" class="file-name">{{ fileName }}</div>
-        <!--<div v-else class="uploader-tips">
-          <span>将文件拖拽至此，或</span>
-          <label for="fileInput" style="color: #11A8FF; cursor: pointer">点此上传</label>
-        </div>-->
-      </div>
-    </div>
-
-    <div class="footer">
-<!--      <input type="file" id="fileInput" @change="chooseUploadFile" style="display: none;">-->
-<!--      <label for="fileInput" v-if="fileName" style="color: #11A8FF; cursor: pointer">选择文件</label>-->
-<!--      <button @click="uploadOk">提交</button>-->
-    </div>
+    <video
+      src="../assets/video/video1.mp4"
+      :controls="videoOptions.controls"
+      class="video-js vjs-big-play-centered vjs-fluid"
+      webkit-playsinline="true"
+      playsinline="true"
+      x-webkit-airplay="allow"
+      x5-playsinline
+      style="width: 50%;"
+      @play="onPlayerPlay"
+      @pause="onPlayerPause"
+      @seeking="seeking"
+      autoplay="autoplay"
+      ref="video">
+    </video>
   </div>
 </template>
 
@@ -25,10 +25,40 @@ export default {
     return {
       fileName: '',
       batchFile: '',
-      MAX_FILE_SIZE: 10 * 1000 * 1000
+      MAX_FILE_SIZE: 10 * 1000 * 1000,
+      videoOptions: {
+        controls:true,
+        src: "../assets/video/video1.mp4", // url地址
+      },
+      player: null,
+      playTime:'',
+      seekTime:'',
+      current:'',
     }
   },
   methods: {
+    // 播放回调
+    seeking(player){
+      // this.globalSetting = true
+      console.log("player play!", player);
+      // document.getElementsByClassName("vjs-control-bar").style.display = "block";
+      // document.getElementsByClassName("vjs-control-bar").style.display = "block";
+    },
+    // 播放回调
+    onPlayerPlay(player){
+      // this.globalSetting = true
+      console.log("player play!", player);
+      // document.getElementsByClassName("vjs-control-bar").style.display = "block";
+      // document.getElementsByClassName("vjs-control-bar").style.display = "block";
+    },
+    // 暂停回调
+    onPlayerPause(player){
+      // this.globalSetting.controls = false;
+      // console.log("player pause!", player);
+      // var video = document.getElementById("video");
+      // video.controls=false;
+      // document.getElementsByClassName("vjs-control-bar").style.display = "none";
+    },
     // 点击上传
     chooseUploadFile (e) {
       const file = e.target.files.item(0)
@@ -73,8 +103,12 @@ export default {
       console.log(this.fileName)
       // ajax
     }
+  },
+beforeDestroy() {
+  if (this.player) {
+    this.player.dispose()
   }
-
+},
 }
 </script>
 
