@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <video
+    <!--<video
       src="../assets/video/video1.mp4"
       :controls="videoOptions.controls"
       class="video-js vjs-big-play-centered vjs-fluid"
@@ -14,7 +14,19 @@
       @seeking="seeking"
       autoplay="autoplay"
       ref="video">
-    </video>
+    </video>-->
+
+    <div class="box">
+      <ul id="box">
+<!--        <li>158****546已购买1个月</li>-->
+<!--        <li>158****546已购买2个月</li>-->
+<!--        <li>158****546已购买3个月</li>-->
+<!--        <li>158****546已购买4个月</li>-->
+<!--        <li>158****546已购买5个月</li>-->
+<!--        <li>158****546已购买1个月</li>-->
+        <li v-for="item in 10">158****546已购买{{item}}个月</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -34,7 +46,12 @@ export default {
       playTime:'',
       seekTime:'',
       current:'',
+      newPosition:0,
+      myVar:'',
     }
+  },
+  mounted() {
+    this.myVar = setInterval(this.animate, 3000);
   },
   methods: {
     // 播放回调
@@ -102,13 +119,29 @@ export default {
       data.append('upfile', this.batchFile)
       console.log(this.fileName)
       // ajax
+    },
+
+    animate :function () {
+      if (this.newPosition < -(10*40)+240) {
+        this.newPosition = 0;
+        document.getElementById('box').style.transition = "";
+        document.getElementById('box').style.transform = "translateY(0px)";
+      }else {
+        this.newPosition+= -40;
+        document.getElementById('box').style.transition = "transform 2s";
+        document.getElementById('box').style.transform = "translateY(" + this.newPosition + "px)";
+      }
     }
   },
-beforeDestroy() {
-  if (this.player) {
-    this.player.dispose()
+  beforeDestroy() {
+    if (this.player) {
+      this.player.dispose()
+    }
+    clearInterval(this.myVar);
+  },
+  destroyed() {
+    // clearInterval(this.myVar);
   }
-},
 }
 </script>
 
@@ -133,5 +166,27 @@ beforeDestroy() {
     text-align: center;
     height: 200px;
     line-height: 200px;
+  }
+
+
+  .box{
+    width: 300px;
+    height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid rebeccapurple;
+  }
+  .box>ul{
+    margin: 0;
+    padding: 0;
+  }
+  .box>ul>li{
+    list-style-type: none;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .count{
+    font-size: 24px;
   }
 </style>
