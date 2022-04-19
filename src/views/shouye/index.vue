@@ -1,11 +1,10 @@
 <template>
     <div class="shouye-container">
-      <!--我是首页-->
+      <!--我是首页!!!!!!!-->
 
       <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;height: 45%">
         <carousel-demo></carousel-demo>
       </el-row>
-
       <el-row style="margin-bottom:32px;height: 40%">
         <el-col :span="8" class="downList">
           <map-demo></map-demo>
