@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-col :span="2" v-for="item in fileList" :key="item.name" style="" class="fileCard">
+    <el-col :span="2" v-for="item in fileList" :key="item.name" class="fileCard">
       <img :src="item.icon">
       <p>{{item.name}}</p>
     </el-col>
