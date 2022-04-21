@@ -10,15 +10,9 @@
   >
     <div class="custom-tree-node" slot-scope="{ node, data}">
       <div>
-        <span v-if="!data.children||data.id=='0'">
-          <i class="el-icon-document" style="color: #fd7575"></i>
-        </span>
-        <span v-else>
-            <i :class="data.open ?  'el-icon-folder-opened' : 'el-icon-folder' " style="color: #448ac4"></i>
-        </span>
+        <img src="@/assets/dir.png" style="height: 20px;width: 20px;">
         <!-- 名称 -->
         <span>{{ node.label }}</span>
-        <i v-show="data.children" :class="data.open ?  'el-icon-caret-bottom' : 'el-icon-caret-top' " style="color: #448ac4;"></i>
       </div>
     </div>
   </el-tree>

@@ -1,26 +1,28 @@
 <template>
   <div style="overflow: hidden">
+    <!--文件管理抬头-->
+    <!--      <div></div>-->
+
     <!--左侧树-->
-    <el-col :span="4">
-      <left-tree :treeData="treeData"></left-tree>
+    <el-col :span="4" class="leftTree">
+      <left-tree :treeData="treeData" class="leftTreeContent"></left-tree>
     </el-col>
 
     <!--右侧文件-->
     <el-col :span="20">
-      <!--文件管理抬头-->
-<!--      <div></div>-->
       <div @dragover="fileDragover" @drop="fileDrop" class="fileContent">
         <!--图形形式-->
         <right-file-img v-show="imgOrTable" :fileList="fileList"></right-file-img>
         <!--列表形式-->
         <right-file-table v-show="!imgOrTable" :fileList="fileList"></right-file-table>
       </div>
-      <!--文件管理转换页尾-->
-      <div class="fileFooter">
-        <i title="在窗口显示每一项的信息。" @click="imgOrTable=false" class="el-icon-s-order btn2" :class="!imgOrTable ? 'active' : 'btn1'"></i>
-        <i title="使用大缩略图显示项。" @click="imgOrTable=true" class="el-icon-s-platform btn1" :class="imgOrTable ? 'active' : 'btn1'"></i>
-      </div>
     </el-col>
+
+    <!--文件管理转换页尾-->
+    <div class="fileFooter">
+      <i title="在窗口显示每一项的信息。" @click="imgOrTable=false" class="el-icon-s-order btn2" :class="!imgOrTable ? 'active' : 'btn1'"></i>
+      <i title="使用大缩略图显示项。" @click="imgOrTable=true" class="el-icon-s-platform btn1" :class="imgOrTable ? 'active' : 'btn1'"></i>
+    </div>
   </div>
 </template>
 
@@ -94,17 +96,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  //左侧树
+  .leftTree{
+    border-right: rgba(147, 180, 220, 0.35) solid 0.5px;
+    height: 90vh;
+    .leftTreeContent{
+      margin-top: 3vh;
+    }
+  }
   //文件管理正文
   .fileContent{
     overflow-y: auto;
     height: 90vh;
+    margin-left: 2vh;
   }
   //文件管理转换页尾
   .fileFooter{
     position: fixed;
     right: 4vh;
     bottom: 3vh;
-
     i{
       border: transparent solid 0.5px;
       color: rgba(119, 119, 119, 0.35);
