@@ -11,18 +11,16 @@
 export default {
   name: "rightFileImg",
   props:{
-    fileList:{
+    fileList:{//文件数据
       type:Array,
       default:[]
     }
   },
   mounted() {
-    console.log(this.fileList);
+    // console.log(this.fileList);
   },
   data () {
-    return {
-      imgUrl: require('@/assets/image/dir.png'), //图片地址
-    }
+    return {}
   },
   methods:{}
 }
