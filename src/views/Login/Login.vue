@@ -198,9 +198,9 @@
                 component: () => import('@/components/HelloWorld')
               },
               {
-                path: 'homeOne',
-                name: 'HelloWorldOne',
-                component: () => import('@/components/HelloWorldOne')
+                path: 'fileMsg',
+                name: '我的文件',
+                component: () => import('@/views/FileMsg/fileMsg')
               },
               {
                 path: 'user',
