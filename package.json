@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@ztree/ztree_v3": "^3.5.48",
     "axios": "^0.21.1",
     "d3-geo": "^1.11.9",
     "element-china-area-data": "^5.0.2",
