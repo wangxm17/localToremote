@@ -1,66 +1,52 @@
 <template>
-  <div>
+  <div style="overflow: hidden">
     <!--左侧树-->
     <el-col :span="4">
-      <left-tree></left-tree>
+      <left-tree :treeData="treeData"></left-tree>
     </el-col>
 
     <!--右侧文件-->
     <el-col :span="20">
-      <div @dragover="fileDragover" @drop="fileDrop">
-        <right-file-img :fileList="fileList"></right-file-img>
+      <!--文件管理抬头-->
+<!--      <div></div>-->
+      <div @dragover="fileDragover" @drop="fileDrop" class="fileContent">
+        <!--图形形式-->
+        <right-file-img v-show="imgOrTable" :fileList="fileList"></right-file-img>
+        <!--列表形式-->
+        <right-file-table v-show="!imgOrTable" :fileList="fileList"></right-file-table>
+      </div>
+      <!--文件管理转换页尾-->
+      <div class="fileFooter">
+        <i title="在窗口显示每一项的信息。" @click="imgOrTable=false" class="el-icon-s-order btn2" :class="!imgOrTable ? 'active' : 'btn1'"></i>
+        <i title="使用大缩略图显示项。" @click="imgOrTable=true" class="el-icon-s-platform btn1" :class="imgOrTable ? 'active' : 'btn1'"></i>
       </div>
     </el-col>
-
   </div>
 </template>
 
 <script>
 import leftTree from '@/views/FileMsg/components/leftTree' //左侧树
 import rightFileImg from '@/views/FileMsg/components/rightFileImg' //右侧文件--图片展示
+import rightFileTable from '@/views/FileMsg/components/rightFileTable' //右侧文件--列表展示
 import fileIconKeyValue from '@/api/FileMsg/fileIconKeyValue' //右侧文件--图片图标
+import fileList from '@/api/FileMsg/fileList' //右侧文件--图片图标
 
 export default {
   name: 'fileMsg',
   components: {
-    leftTree,rightFileImg
+    leftTree,rightFileImg,rightFileTable
   },
   data () {
     return {
+      //树的数据
+      treeData:[
+        {label: "我的调研", open: true, children: [{label: "基础信息"}]},
+        {label: "你的调研", open: true, children: [{label: "采集系统"}, {label: "收集系统"}]},
+        {label: "一级 3", open: true, children: [{label: "二级 3-1"}, {label: "二级 3-2"}]}
+        ],
       //文件数据集
-      fileList: [
-        {id:'0', name:'文件0.zip'},
-        {id:'1', name:'文件1.zip'},
-        {id:'2', name:'文件2.dir'},
-        {id:'3', name:'文件3.doc'},
-        {id:'3', name:'文件3.docx'},
-        {id:'3', name:'文件3.avi'},
-        {id:'3', name:'文件3.chm'},
-        {id:'3', name:'文件3.code'},
-        {id:'3', name:'文件3.css'},
-        {id:'3', name:'文件3.csv'},
-        {id:'3', name:'文件3.dmg'},
-        {id:'3', name:'文件3.excel'},
-        {id:'3', name:'文件3.exe'},
-        {id:'3', name:'文件3.gif'},
-        {id:'3', name:'文件3.html'},
-        {id:'3', name:'文件3.img'},
-        {id:'3', name:'文件3.jar'},
-        {id:'3', name:'文件3.js'},
-        {id:'3', name:'文件3.json'},
-        {id:'3', name:'文件3.md'},
-        {id:'3', name:'文件3.music'},
-        {id:'3', name:'文件3.oa'},
-        {id:'3', name:'文件3.open'},
-        {id:'3', name:'文件3.pdf'},
-        {id:'3', name:'文件3.pic'},
-        {id:'3', name:'文件3.ppt'},
-        {id:'3', name:'文件3.rar'},
-        {id:'3', name:'文件3.rtf'},
-        {id:'3', name:'文件3.sql'},
-        {id:'3', name:'文件3.svg'},
-        {id:'3', name:'文件3.txt'},
-      ],
+      fileList: fileList,
+      imgOrTable:true,//图形形式|列表形式转换参数(默认是图片形式)
     }
   },
   mounted() {
@@ -108,5 +94,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  //文件管理正文
+  .fileContent{
+    overflow-y: auto;
+    height: 90vh;
+  }
+  //文件管理转换页尾
+  .fileFooter{
+    position: fixed;
+    right: 4vh;
+    bottom: 3vh;
 
+    i{
+      border: transparent solid 0.5px;
+      color: rgba(119, 119, 119, 0.35);
+      &:hover{
+        border: rgba(121, 175, 241, 1) solid 0.5px;
+        color: rgba(121, 175, 241, 1);
+      }
+    }
+    .btn1.active, .btn2.active {
+      border: rgba(121, 175, 241, 1) solid 0.5px;
+      color: rgba(121, 175, 241, 1);
+    }
+  }
 </style>

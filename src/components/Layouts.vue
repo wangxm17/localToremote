@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 1000px; border: 1px solid #eee">
+  <el-container style="border: 1px solid #eee">
     <el-aside width="200px" >
       <!--菜单-->
       <Menu style="height: 100%;"></Menu>

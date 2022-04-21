@@ -1,6 +1,6 @@
 <template>
   <el-tree
-    :data="data"
+    :data="treeData"
     ref="tree"
     :props="defaultProps"
     current-node-key="1"
@@ -27,22 +27,14 @@
 <script>
 export default {
   name: "leftTree",
+  props:{
+    treeData:{//树的数据
+      type:Array,
+      default:[]
+    }
+  },
   data () {
     return {
-      //树的数据
-      data: [{
-          label: "我的调研",
-          open: true,
-          children: [{label: "基础信息"}]
-        },{
-          label: "你的调研",
-          open: true,
-          children: [{label: "采集系统"}, {label: "收集系统"}]
-        },{
-          label: "一级 3",
-          open: true,
-          children: [{label: "二级 3-1"}, {label: "二级 3-2"}]
-        }],
       //默认设置
       defaultProps: {
         children: "children",
