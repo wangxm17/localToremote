@@ -1,6 +1,14 @@
 <template>
   <div>
-    <div :span="2" @click="cardChecked(index)" v-for="(item,index) in fileList"  :key="index" class="fileCard" :class="!item.isChecked ? 'active' : 'fileCardChecked'">
+    <div
+      :span="2"
+      @click.stop="cardChecked(index)"
+      @contextmenu.prevent.stop="fileRightMenuShow(item,index)"
+      v-for="(item,index) in fileList"
+      :key="index"
+      class="fileCard"
+      :class="!item.isChecked ? 'active' : 'fileCardChecked'"
+    >
       <img :src="item.icon" >
       <p>{{item.name}}</p>
     </div>
@@ -16,9 +24,7 @@ export default {
       default:[]
     }
   },
-  mounted() {
-    // console.log(this.fileList);
-  },
+  mounted() {},
   data () {
     return {}
   },
@@ -29,6 +35,11 @@ export default {
         item.isChecked = false;
       })
       this.fileList[index].isChecked = true;
+    },
+    //右键菜单
+    fileRightMenuShow(row,index){
+      this.cardChecked(index);//高亮显示选中
+      this.$emit('fileRightMenuShow',row);
     },
   }
 }

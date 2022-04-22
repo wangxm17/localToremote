@@ -1,7 +1,7 @@
 <template>
   <div style="overflow: hidden">
     <!--文件管理抬头-->
-    <!--      <div></div>-->
+    <file-header :fileUrlArr="fileUrlArr"></file-header>
 
     <!--左侧树-->
     <el-col :span="4" class="leftTree">
@@ -10,33 +10,45 @@
 
     <!--右侧文件-->
     <el-col :span="20">
-      <div @dragover="fileDragover" @drop="fileDrop" class="fileContent">
+      <div @dragover="fileDragover" @drop="fileDrop" class="fileContent" @click="cleanChecked()" @contextmenu.prevent="nullRightMenuShow" >
         <!--图形形式-->
-        <right-file-img v-show="imgOrTable" :fileList="fileList"></right-file-img>
+        <right-file-img v-show="imgOrTable" :fileList="fileList" @fileRightMenuShow="fileRightMenuShow"></right-file-img>
         <!--列表形式-->
-        <right-file-table v-show="!imgOrTable" :fileList="fileList"></right-file-table>
+        <right-file-table v-show="!imgOrTable" :fileList="fileList" @fileRightMenuShow="fileRightMenuShow"></right-file-table>
       </div>
     </el-col>
 
     <!--文件管理转换页尾-->
-    <div class="fileFooter">
-      <i title="在窗口显示每一项的信息。" @click="imgOrTable=false" class="el-icon-s-order btn2" :class="!imgOrTable ? 'active' : 'btn1'"></i>
-      <i title="使用大缩略图显示项。" @click="imgOrTable=true" class="el-icon-s-platform btn1" :class="imgOrTable ? 'active' : 'btn1'"></i>
-    </div>
+    <file-footer :imgOrTable="imgOrTable" @imgOrTableSet="imgOrTableSet"></file-footer>
+
+    <!--点击文件，出现右击菜单-->
+    <Contextmenu ref="fileRightMenu" class="context-menu">
+      <li @click="test1" class="el-icon-view"><span>预览</span></li>
+      <li @click="test2" class="el-icon-edit"><span>重命名</span></li>
+      <li @click="cleanChecked" class="el-icon-delete"><span>删除</span></li>
+    </Contextmenu>
+    <!--点击空白，出现右击菜单-->
+    <Contextmenu ref="nullRightMenu" class="context-menu">
+      <li @click="test2" class="el-icon-refresh"><span>刷新</span></li>
+      <li @click="test1" class="el-icon-folder-add"><span>新建文件夹</span></li>
+    </Contextmenu>
   </div>
 </template>
 
 <script>
+import fileHeader from '@/views/FileMsg/components/fileHeader' //抬头
 import leftTree from '@/views/FileMsg/components/leftTree' //左侧树
+import fileList from '@/api/FileMsg/fileList' //右侧文件--模拟数据
 import rightFileImg from '@/views/FileMsg/components/rightFileImg' //右侧文件--图片展示
 import rightFileTable from '@/views/FileMsg/components/rightFileTable' //右侧文件--列表展示
 import fileIconKeyValue from '@/api/FileMsg/fileIconKeyValue' //右侧文件--图片图标
-import fileList from '@/api/FileMsg/fileList' //右侧文件--图片图标
+import fileFooter from '@/views/FileMsg/components/fileFooter' //页尾
+import Contextmenu from 'vue-context-menu'//右键菜单
 
 export default {
   name: 'fileMsg',
   components: {
-    leftTree,rightFileImg,rightFileTable
+    fileHeader,leftTree,rightFileImg,rightFileTable,fileFooter,Contextmenu
   },
   data () {
     return {
@@ -46,9 +58,15 @@ export default {
         {label: "你的调研", open: true, children: [{label: "采集系统"}, {label: "收集系统"}]},
         {label: "一级 3", open: true, children: [{label: "二级 3-1"}, {label: "二级 3-2"}]}
         ],
-      //文件数据集
-      fileList: fileList,
+      fileList: fileList,//文件数据集
       imgOrTable:true,//图形形式|列表形式转换参数(默认是图片形式)
+      operationObj:{},//操作对象
+      fileUrlArr:[  //文件路径--所有对象
+        {id:'1',name:'Users'},
+        {id:'2',name:'82060'},
+        {id:'3',name:'Desktop'},
+        {id:'4',name:'ruoyi-ui'},
+      ],
     }
   },
   mounted() {
@@ -56,7 +74,7 @@ export default {
     this.setFileIcon(this.fileList);
   },
   methods:{
-    //设置文件图标
+    //右侧文件--图形形式|列表形式--设置文件图标
     setFileIcon:function(newData){
       for(let item in newData){
         let fileExtension = newData[item].name.split('.').pop().toLowerCase();//获取文件后缀
@@ -67,6 +85,29 @@ export default {
           }
         }
       }
+    },
+    //右侧文件--图形形式--点击空白，置空图片选中状态
+    cleanChecked(){
+      this.fileList.forEach(item => {
+        item.isChecked = false;
+      })
+    },
+    //页尾--图形形式|列表形式转换方法
+    imgOrTableSet(param){
+      this.imgOrTable = param;
+    },
+    test1(){console.log("test11111111111111")},
+    test2(){console.log("test22222222222222")},
+
+    //点击空白，出现右击菜单
+    nullRightMenuShow() {
+      this.cleanChecked();
+      this.$refs.nullRightMenu.open()
+    },
+    //点击文件，出现右击菜单
+    fileRightMenuShow(param) {
+      this.operationObj = param;
+      this.$refs.fileRightMenu.open()
     },
     // 拖拽上传
     fileDragover (e) {
@@ -109,23 +150,5 @@ export default {
     overflow-y: auto;
     height: 90vh;
     margin-left: 2vh;
-  }
-  //文件管理转换页尾
-  .fileFooter{
-    position: fixed;
-    right: 4vh;
-    bottom: 3vh;
-    i{
-      border: transparent solid 0.5px;
-      color: rgba(119, 119, 119, 0.35);
-      &:hover{
-        border: rgba(121, 175, 241, 1) solid 0.5px;
-        color: rgba(121, 175, 241, 1);
-      }
-    }
-    .btn1.active, .btn2.active {
-      border: rgba(121, 175, 241, 1) solid 0.5px;
-      color: rgba(121, 175, 241, 1);
-    }
   }
 </style>

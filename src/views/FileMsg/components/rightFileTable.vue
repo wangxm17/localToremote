@@ -1,6 +1,13 @@
 <template>
 <div>
-  <el-table :data="fileList" height="90vh" class="fileTable" @sort-change="tableSort" highlight-current-row>
+  <el-table
+    :data="fileList"
+    height="90vh"
+    class="fileTable"
+    @sort-change="tableSort"
+    highlight-current-row
+    @row-contextmenu="fileRightMenuShow"
+  >
     <el-table-column label="名称" prop="name" align="left" :render-header="renderHeader" sortable="custom" width="300">
       <template slot-scope="scope" style="vertical-align: middle;position: relative;">
         <img :src="scope.row.icon" style="width: 20px;margin: 0;position: absolute;top: 6px;">
@@ -32,6 +39,12 @@ export default {
     }
   },
   methods:{
+    //右键菜单
+    fileRightMenuShow(row,column,event){
+      event.stopPropagation();//防止冒泡
+      event.preventDefault();//阻止默认事件
+      this.$emit('fileRightMenuShow',row);
+    },
     //自定义表头
     renderHeader(h){
       return h('div',null,[
@@ -123,5 +136,9 @@ export default {
 }
 /deep/ .el-table--medium td{
   padding: 0px 0;
+}
+
+/deep/ .fileTable .el-table__body tr.current-row>td {
+  /*background-color: #114a89;*/
 }
 </style>

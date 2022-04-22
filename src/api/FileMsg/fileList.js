@@ -1,3 +1,4 @@
+//我的文件--模拟数据
 const fileList = [
   {id:'0',update:'2022-4-21',size:'200kb',type:"文件", name:'文件0.zip',isChecked:false},
   {id:'1',update:'2022-4-21',size:'200kb',type:"文件", name:'文件1.zip',isChecked:false},
