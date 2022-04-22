@@ -4,23 +4,36 @@
     <i class="el-icon-back"></i>
     <!--文件路径框-->
     <div class="fileUrl">
-      <div v-for="(item,index) in fileUrlArr" :key="index" class="fileUrlItem">
+      <div v-for="(item,index) in fileUrlArr" :key="index" class="fileUrlItem"
+           :class="item.rightIcon!='el-icon-arrow-down' ? 'active' : 'fileUrlItemChecked'">
         <span>{{item.name}}</span>
         <i :class="item.rightIcon" @click="iconChecked(item,index)"></i>
       </div>
     </div>
     <!--搜索框-->
     <div class="fileSearch"></div>
+
+    <!--出现右击菜单-->
+    <Contextmenu ref="fileListMenu" class="context-menu">
+      <li class="el-icon-folder"><span>文件夹1</span></li>
+      <li class="el-icon-folder"><span>文件夹2</span></li>
+      <li class="el-icon-folder"><span>文件夹3</span></li>
+      <li class="el-icon-folder"><span>文件夹4</span></li>
+    </Contextmenu>
   </div>
 </template>
 
 <script>
+import Contextmenu from 'vue-context-menu'//菜单
 export default {
   name: "fileHeader",
+  components: {
+    Contextmenu
+  },
   props:{
     fileUrlArr:{ //文件路径--所有对象
-      type:String,
-      default:''
+      type:Array,
+      default:[]
     }
   },
   data () {
@@ -45,6 +58,7 @@ export default {
           item.rightIcon = "el-icon-arrow-right";
         })
         this.fileUrlArr[index].rightIcon = "el-icon-arrow-down";
+        // this.$refs.fileListMenu.open()
       }
     },
   }
@@ -98,6 +112,14 @@ export default {
       }
     }
 
+    .fileUrlItemChecked{
+      background-color: rgba(121, 175, 241, 0.2);
+      border: rgba(121, 175, 241, 0.6) solid 0.5px;
+      span{
+        border-right: rgba(121, 175, 241, 0.6) solid 0.5px;
+        border-radius: 0 3px 3px 0;
+      }
+    }
   }
   .fileSearch{
     border: rgba(173, 173, 173, 0.5) solid 1px;
