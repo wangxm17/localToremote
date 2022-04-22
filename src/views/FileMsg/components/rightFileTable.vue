@@ -2,7 +2,7 @@
 <div>
   <el-table
     :data="fileList"
-    height="90vh"
+    height="82vh"
     class="fileTable"
     @sort-change="tableSort"
     highlight-current-row

@@ -1,13 +1,11 @@
 <template>
-  <div style="overflow: hidden">
+  <div class="fileMsg">
     <!--文件管理抬头-->
-    <file-header :fileUrlArr="fileUrlArr"></file-header>
-
+    <file-header :fileUrlArr="fileUrlArr" class="header"></file-header>
     <!--左侧树-->
     <el-col :span="4" class="leftTree">
       <left-tree :treeData="treeData" class="leftTreeContent"></left-tree>
     </el-col>
-
     <!--右侧文件-->
     <el-col :span="20">
       <div @dragover="fileDragover" @drop="fileDrop" class="fileContent" @click="cleanChecked()" @contextmenu.prevent="nullRightMenuShow" >
@@ -62,10 +60,10 @@ export default {
       imgOrTable:true,//图形形式|列表形式转换参数(默认是图片形式)
       operationObj:{},//操作对象
       fileUrlArr:[  //文件路径--所有对象
-        {id:'1',name:'Users'},
-        {id:'2',name:'82060'},
-        {id:'3',name:'Desktop'},
-        {id:'4',name:'ruoyi-ui'},
+        {id:'1',rightIcon:"el-icon-arrow-right",name:'Users'},
+        {id:'2',rightIcon:"el-icon-arrow-right",name:'82060'},
+        {id:'3',rightIcon:"el-icon-arrow-right",name:'Desktop'},
+        {id:'4',rightIcon:"el-icon-arrow-right",name:'ruoyi-ui'},
       ],
     }
   },
@@ -137,18 +135,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  //左侧树
-  .leftTree{
-    border-right: rgba(147, 180, 220, 0.35) solid 0.5px;
-    height: 90vh;
-    .leftTreeContent{
-      margin-top: 3vh;
+  .fileMsg{
+    padding: 1vh;
+    overflow: hidden;
+    background-color: #f0f2f5;
+    //抬头
+    .header{
+      background-color: #ffffff;
+      padding-bottom: 1vh;
+      border-radius: 7px 7px 0px 0px;
+    }
+    //左侧树
+    .leftTree{
+      background-color: #ffffff;
+      border-radius: 0px 0px 0px 7px;
+      border-right: rgba(147, 180, 220, 0.35) solid 0.5px;
+      height: 82vh;
+      .leftTreeContent{
+        margin-top: 3vh;
+      }
+    }
+    //文件管理正文
+    .fileContent{
+      border-radius: 0px 0px 7px 0px;
+      overflow-y: auto;
+      height: 82vh;
+      padding-left: 2vh;
+      background-color: #ffffff;
     }
   }
-  //文件管理正文
-  .fileContent{
-    overflow-y: auto;
-    height: 90vh;
-    margin-left: 2vh;
-  }
+
 </style>

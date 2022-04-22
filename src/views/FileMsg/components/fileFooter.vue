@@ -30,8 +30,8 @@ export default {
   //文件管理转换页尾
 .fileFooter{
   position: fixed;
-  right: 4vh;
-  bottom: 3vh;
+  right: 5vh;
+  bottom: 4vh;
 i{
   border: transparent solid 0.5px;
   color: rgba(119, 119, 119, 0.35);
