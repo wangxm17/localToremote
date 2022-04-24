@@ -53,7 +53,7 @@ export default {
       //树的数据
       // treeData:[
       //   {label: "我的调研", open: true, children: [{label: "基础信息"}]},
-      //   {label: "你的调研", open: true, children: [{label: "采集系统"}, {label: "收集系统"}]},
+      //   {label: "你的调研", open: true, children: [{label: "采集系统"}, {label: "收集系统",children: [{label: "采集系统"}, {label: "收集系统"}]}]},
       //   {label: "一级 3", open: true, children: [{label: "二级 3-1"}, {label: "二级 3-2"}]}
       //   ],
       treeData:treeList,//树的数据

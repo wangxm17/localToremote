@@ -3,7 +3,6 @@
     :data="treeData"
     ref="tree"
     :props="defaultProps"
-    current-node-key="1"
     node-key="id"
     @node-click="nodeClick"
     default-expand-all
@@ -32,8 +31,7 @@ export default {
       //默认设置
       defaultProps: {
         children: "children",
-        label: "name",
-        isLeaf: 'leaf'
+        label: "label"
       },
     }
   },
