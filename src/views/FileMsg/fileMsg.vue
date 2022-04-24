@@ -10,9 +10,9 @@
     <el-col :span="20">
       <div @dragover="fileDragover" @drop="fileDrop" class="fileContent" @click="cleanChecked()" @contextmenu.prevent="nullRightMenuShow" >
         <!--图形形式-->
-        <right-file-img v-show="imgOrTable" :fileList="fileList" @fileRightMenuShow="fileRightMenuShow"></right-file-img>
+        <right-file-img v-show="imgOrTable" :fileList="fileList" @fileRightMenuShow="fileRightMenuShow" @fileDirDblclick="fileDirDblclick"></right-file-img>
         <!--列表形式-->
-        <right-file-table v-show="!imgOrTable" :fileList="fileList" @fileRightMenuShow="fileRightMenuShow"></right-file-table>
+        <right-file-table v-show="!imgOrTable" :fileList="fileList" @fileRightMenuShow="fileRightMenuShow" @fileDirDblclick="fileDirDblclick"></right-file-table>
       </div>
     </el-col>
 
@@ -84,6 +84,7 @@ export default {
           }
         }
       }
+      return newData;
     },
     //右侧文件--图形形式--点击空白，置空图片选中状态
     cleanChecked(){
@@ -98,6 +99,18 @@ export default {
     test1(){console.log("test11111111111111")},
     test2(){console.log("test22222222222222")},
 
+    //双击---文件夹点进去
+    fileDirDblclick(param){
+      if(param.name.split('.').pop().toLowerCase()=="dir"){
+        if(param.children){
+          this.fileList = this.setFileIcon(param.children)
+        }else {
+          this.fileList = [];
+        }
+      }else {
+        this.$message.warning("不是文件夹")
+      }
+    },
     //点击空白，出现右击菜单
     nullRightMenuShow() {
       this.cleanChecked();

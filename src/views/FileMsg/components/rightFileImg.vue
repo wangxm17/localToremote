@@ -3,6 +3,7 @@
     <div
       :span="2"
       @click.stop="cardChecked(index)"
+      @dblclick="fileDirDblclick(item)"
       @contextmenu.prevent.stop="fileRightMenuShow(item,index)"
       v-for="(item,index) in fileList"
       :key="index"
@@ -41,6 +42,10 @@ export default {
       this.cardChecked(index);//高亮显示选中
       this.$emit('fileRightMenuShow',row);
     },
+    //双击---文件夹点进去
+    fileDirDblclick(row){
+      this.$emit('fileDirDblclick',row);
+    }
   }
 }
 </script>

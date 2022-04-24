@@ -7,6 +7,7 @@
     @sort-change="tableSort"
     highlight-current-row
     @row-contextmenu="fileRightMenuShow"
+    @row-dblclick="fileDirDblclick"
   >
     <el-table-column label="名称" prop="name" align="left" :render-header="renderHeader" sortable="custom" width="300">
       <template slot-scope="scope" style="vertical-align: middle;position: relative;">
@@ -44,6 +45,10 @@ export default {
       event.stopPropagation();//防止冒泡
       event.preventDefault();//阻止默认事件
       this.$emit('fileRightMenuShow',row);
+    },
+    //双击---文件夹点进去
+    fileDirDblclick(row, column, event){
+      this.$emit('fileDirDblclick',row);
     },
     //自定义表头
     renderHeader(h){
