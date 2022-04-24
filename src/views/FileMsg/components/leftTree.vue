@@ -32,8 +32,9 @@ export default {
       //默认设置
       defaultProps: {
         children: "children",
-        label: "label"
-      }
+        label: "name",
+        isLeaf: 'leaf'
+      },
     }
   },
   methods:{

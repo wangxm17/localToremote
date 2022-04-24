@@ -36,7 +36,7 @@
 <script>
 import fileHeader from '@/views/FileMsg/components/fileHeader' //抬头
 import leftTree from '@/views/FileMsg/components/leftTree' //左侧树
-import fileList from '@/api/FileMsg/fileList' //右侧文件--模拟数据
+import {fileList,treeList} from '@/api/FileMsg/fileData' //--模拟数据
 import rightFileImg from '@/views/FileMsg/components/rightFileImg' //右侧文件--图片展示
 import rightFileTable from '@/views/FileMsg/components/rightFileTable' //右侧文件--列表展示
 import fileIconKeyValue from '@/api/FileMsg/fileIconKeyValue' //右侧文件--图片图标
@@ -51,11 +51,12 @@ export default {
   data () {
     return {
       //树的数据
-      treeData:[
-        {label: "我的调研", open: true, children: [{label: "基础信息"}]},
-        {label: "你的调研", open: true, children: [{label: "采集系统"}, {label: "收集系统"}]},
-        {label: "一级 3", open: true, children: [{label: "二级 3-1"}, {label: "二级 3-2"}]}
-        ],
+      // treeData:[
+      //   {label: "我的调研", open: true, children: [{label: "基础信息"}]},
+      //   {label: "你的调研", open: true, children: [{label: "采集系统"}, {label: "收集系统"}]},
+      //   {label: "一级 3", open: true, children: [{label: "二级 3-1"}, {label: "二级 3-2"}]}
+      //   ],
+      treeData:treeList,//树的数据
       fileList: fileList,//文件数据集
       imgOrTable:true,//图形形式|列表形式转换参数(默认是图片形式)
       operationObj:{},//操作对象
@@ -69,7 +70,7 @@ export default {
   },
   mounted() {
     // console.log(iconKeyValue);
-    this.setFileIcon(this.fileList);
+    this.setFileIcon(this.fileList);//右侧文件--图形形式|列表形式--设置文件图标
   },
   methods:{
     //右侧文件--图形形式|列表形式--设置文件图标
@@ -151,6 +152,7 @@ export default {
       border-radius: 0px 0px 0px 7px;
       border-right: rgba(147, 180, 220, 0.35) solid 0.5px;
       height: 82vh;
+      overflow-y: auto;
       .leftTreeContent{
         margin-top: 3vh;
       }

@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.fileList);
+    // console.log(this.fileData);
   },
   data () {
     return {
