@@ -1,7 +1,9 @@
 <template>
   <section  style="background: #fff;">
     <div style="text-align: right;padding-top:20px;padding-right: 40px;">
-      <el-button @click="exportPdf()" type="button" class="el-button--primary">一键导出Word报告</el-button>
+      <el-button @click="toChoose()" type="button" class="el-button--primary">返回选择</el-button>
+      <el-button @click="exportWord()" type="button" class="el-button--primary">导出Word报告</el-button>
+      <el-button @click="exportPdf()" type="button" class="el-button--primary">导出Pdf报告</el-button>
     </div>
     <div class="word" style="width:90%;margin:0 auto;" id="word">
       <p align="center" style="font-size:24px;line-height: 30px;">{{fileName}}月度管理报告</p>
@@ -23,7 +25,6 @@
           <td colspan="2">暂无数据</td>
         </tr>
       </table>
-
       <p style="font-size:16px;line-height: 30px;font-weight: bold;text-indent: 2rem;">2.报告期末前五大行业配置情况</p>
       <table >
         <thead>
@@ -63,8 +64,11 @@
         }
       },
       methods:{
-        //导出pdf
-        exportPdf(){
+        toChoose(){
+          this.$router.push('/index/fileChoose')
+        },
+        //导出Word
+        exportWord(){
           let that = this;
           //设置table的样式
           var rules = "table{" +
@@ -92,6 +96,10 @@
             $("#word").wordExport(that.fileName , rules);
             // document.getElementById("word").wordExport(that.fileName , rules);
           },300)
+        },
+        //导出pdf
+        exportPdf(){
+
         },
       },
       components:{

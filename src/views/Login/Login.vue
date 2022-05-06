@@ -203,6 +203,11 @@
                 component: () => import('@/views/FileMsg/fileMsg')
               },
               {
+                path: 'fileChoose',
+                name: '目录选择',
+                component: () => import('@/views/fileExport/fileChoose')
+              },
+              {
                 path: 'fileExport',
                 name: '文件导出',
                 component: () => import('@/views/fileExport/fileExport')
