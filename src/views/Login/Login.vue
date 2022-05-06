@@ -203,6 +203,11 @@
                 component: () => import('@/views/FileMsg/fileMsg')
               },
               {
+                path: 'fileExport',
+                name: '文件导出',
+                component: () => import('@/views/fileExport/fileExport')
+              },
+              {
                 path: 'user',
                 name: '用户表',
                 component: () => import('@/views/User/userTable')
