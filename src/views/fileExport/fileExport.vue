@@ -162,7 +162,7 @@
                 }
               }
             }
-            PDF.save('食堂利用明细' + '.pdf')//下载标题
+            PDF.save(_this.fileName + '.pdf')//下载标题
           });
         },
     },

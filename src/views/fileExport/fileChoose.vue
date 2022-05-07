@@ -1,7 +1,7 @@
 <template>
-    <div>
-      <div style="text-align: right;padding-top:20px;padding-right: 40px;">
-        菜单选择
+    <div class="allCard">
+      <div class="headerSty">
+        <span>菜单选择</span>
         <el-button @click="toPath()" type="button" class="el-button--primary">预览报告</el-button>
       </div>
       <div class="tree">
@@ -109,6 +109,29 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .allCard{
+    background: #f0f2f5;
+    padding: 1vh;
+  }
+.headerSty{
+  padding:1rem;
+  border-radius: 0.2rem;
+  background: #ffffff;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  span{
+    color: #409EFF;
+    font-size: 1.4rem;
+  }
+  .el-button{
+    margin-left: 88%;
+  }
+}
+  .tree{
+    background: #ffffff;
+    padding:1rem;
+    margin-top: 0.2rem;
+  }
 </style>
