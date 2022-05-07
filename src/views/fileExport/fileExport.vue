@@ -100,7 +100,23 @@
       exportWord(){
           let that = this;
           //设置table的样式
-          var rules = "table{" +
+          var rules =
+            ".bigTitle{" +
+            "    font-size:24px;line-height: 30px;text-align: center;" +
+            "  }" +
+            "  .subtitle{" +
+            "    font-size:22px;line-height: 30px;" +
+            "  }" +
+            "  .subSubtitle{" +
+            "    font-size:16px;line-height: 30px;font-weight: bold;text-indent: 2rem;" +
+            "  }" +
+            "  .content{" +
+            "    text-indent: 2em;line-height: 30px;" +
+            "  }" +
+            "  .Subcontent{" +
+            "    text-indent: 4em;line-height: 30px;" +
+            "  }"+
+            "table{" +
             "	border-collapse:collapse;" +
             "	margin:0 auto;" +
             "	text-align:center;" +
