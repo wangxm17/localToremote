@@ -1,57 +1,57 @@
 <template>
- <!-- <div class="login-container">
-    <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
-      <div class="title-container">
-        <h3 class="title">
-          系统登录
-        </h3>
-      </div>
-      <el-form-item prop="username">
-        <el-input
-          prefix-icon="el-icon-user"
-          v-model="loginForm.username"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          prefix-icon="el-icon-lock"
-          v-model="loginForm.password"
-          id="tubiao1"
-          :type="pwdType"
-        ></el-input>
-        <img
-          :src="seen?openeye:nopeneye"
-          class="eye"
-          alt=""
-          @click="changeType()"
-          id="tubiao2"
-        >
-      </el-form-item>
-      <el-form-item prop="code">
-        <el-row>
-          <el-col :span="16">
-            <el-input
-              @keyup.enter.native="handleLogin"
-              v-model="loginForm.code"
-              maxlength="4"
-            ></el-input>
-          </el-col>
-          <el-col :span="8">
-            <img
-              style="border: cadetblue solid 1px;height: 40px;"
-              :src="codeUrl"
-              alt=""
-              @click="getCode()"
-            >
-          </el-col>
-        </el-row>
-      </el-form-item>
-      <el-form>
-        <el-button @click.prevent="handleLogin">登录</el-button>
-        <el-button @click.prevent="toIndex">注册</el-button>
-      </el-form>
-    </el-form>
-  </div>-->
+  <!-- <div class="login-container">
+     <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
+       <div class="title-container">
+         <h3 class="title">
+           系统登录
+         </h3>
+       </div>
+       <el-form-item prop="username">
+         <el-input
+           prefix-icon="el-icon-user"
+           v-model="loginForm.username"
+         ></el-input>
+       </el-form-item>
+       <el-form-item prop="password">
+         <el-input
+           prefix-icon="el-icon-lock"
+           v-model="loginForm.password"
+           id="tubiao1"
+           :type="pwdType"
+         ></el-input>
+         <img
+           :src="seen?openeye:nopeneye"
+           class="eye"
+           alt=""
+           @click="changeType()"
+           id="tubiao2"
+         >
+       </el-form-item>
+       <el-form-item prop="code">
+         <el-row>
+           <el-col :span="16">
+             <el-input
+               @keyup.enter.native="handleLogin"
+               v-model="loginForm.code"
+               maxlength="4"
+             ></el-input>
+           </el-col>
+           <el-col :span="8">
+             <img
+               style="border: cadetblue solid 1px;height: 40px;"
+               :src="codeUrl"
+               alt=""
+               @click="getCode()"
+             >
+           </el-col>
+         </el-row>
+       </el-form-item>
+       <el-form>
+         <el-button @click.prevent="handleLogin">登录</el-button>
+         <el-button @click.prevent="toIndex">注册</el-button>
+       </el-form>
+     </el-form>
+   </div>-->
 
   <div class="snow-container">
     <!--表单1111上传到gitee,再测试一下-->
@@ -186,71 +186,66 @@
         })
       },
       toIndex() {
-        let childrenList = [
+        //动态从后端获取路由---假装从后台取的，后期再写接口
+        var testArr=[
           {
             path: '/index',
             name: '系统管理',
-            component: () => import('@/components/Layouts'),
+            component: 'Layout',
             children: [
-              {
-                path: 'home',
-                name: 'HelloWorld',
-                component: () => import('@/components/HelloWorld')
-              },
               {
                 path: 'fileMsg',
                 name: '我的文件',
-                component: () => import('@/views/FileMsg/fileMsg')
+                component: 'FileMsg/fileMsg'
               },
               {
                 path: 'fileChoose',
                 name: '目录选择',
-                component: () => import('@/views/fileExport/fileChoose')
+                component: 'fileExport/fileChoose'
               },
               {
                 path: 'fileExport',
                 name: '文件导出',
-                component: () => import('@/views/fileExport/fileExport')
+                component: 'fileExport/fileExport'
               },
               {
                 path: 'user',
                 name: '用户表',
-                component: () => import('@/views/User/userTable')
+                component: 'User/userTable'
               },
               {
                 path: 'role',
                 name: '角色表',
-                component: () => import('@/views/Role/roleTable')
+                component: 'Role/roleTable'
               },
               {
                 path: 'menu',
                 name: '菜单表',
-                component: () => import('@/views/Menu/menuTable')
+                component: 'Menu/menuTable'
               },
               {
                 path: 'map',
                 name: '地图',
-                component: () => import('@/views/map/map')
+                component: 'map/map'
               }
             ]
           },
           {
             path: '/One',
             name: '一级无子菜单',
-            component: () => import('@/components/Layouts'),
+            component: 'Layout',
             children: [
               {
                 path: 'shouye',
                 name: '首页',
-                component: () => import('@/views/shouye/index')
+                component: 'shouye/index'
               }
             ]
           }
         ]
-        //动态从后端获取路由
-        this.$router.addRoutes(childrenList);
-        // this.$store.commit('setChildren', childrenList);
-        console.log()
+        //设置路由数据
+        this.$store.commit('SET_DEFAULT_ROUTES', testArr);
+        //跳转到首页
         this.$router.push({path: '/One/shouye', query: this.otherQuery})
       }
     }

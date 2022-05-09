@@ -101,14 +101,14 @@
     },
     created() {
       this.treeData()
-      console.log(this.menuListOne)
+      // console.log(this.menuListOne)
     },
     methods: {
       handleOpen(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       //菜单选择【点击事件】
       menuSelect(index, indexPath) {

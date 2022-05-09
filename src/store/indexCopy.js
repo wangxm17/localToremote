@@ -54,7 +54,7 @@ const okk = [
 export default new Vuex.Store({
   state: {
     token: '',  //初始化token
-    children: okk,  //初始化children
+    children: [],  //初始化children
     childrenList: [
       {
         path: 'home',

@@ -3,7 +3,7 @@ const permission = {
   state: {
     routes: [],
     addRoutes: [],
-    defaultRoutes: [],
+    defaultRoutes: [],//默认路由
     topbarRouters: [],
     sidebarRouters: []
   },
@@ -13,6 +13,7 @@ const permission = {
       // state.routes = constantRoutes.concat(routes)
     },
     SET_DEFAULT_ROUTES: (state, routes) => {
+      state.defaultRoutes = routes
       // state.defaultRoutes = constantRoutes.concat(routes)
     },
     SET_TOPBAR_ROUTES: (state, routes) => {

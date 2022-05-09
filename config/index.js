@@ -5,6 +5,13 @@
 const path = require('path')
 
 module.exports = {
+  chainWebpack: config => {
+    // <link rel="prefetch"> 是一种 resource hint，用来告诉浏览器在页面加载完成后，利用空闲时间提前获取用户未来可能会访问的内容。
+    // 默认情况下，一个 Vue CLI 应用会为所有作为 async chunk 生成的 JavaScript 文件 (通过动态 import() 按需 code splitting 的产物) 自动生成 prefetch 提示。
+    // 这些提示会被 @vue/preload-webpack-plugin 注入，并且可以通过 chainWebpack 的 config.plugin('prefetch') 进行修改和删除。
+    // 移除 prefetch 插件 路由懒加载就好使用了
+    config.plugins.delete('prefetch')
+  },
   dev: {
 
     // Paths
