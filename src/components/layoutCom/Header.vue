@@ -23,7 +23,8 @@
       methods: {
         LoginOut() {
           // localStorage.clear()
-          localStorage.removeItem('token')
+          // localStorage.removeItem('token')
+          sessionStorage.removeItem('token')
           this.$router.push({ path: '/', query: this.otherQuery })
         }
       }

@@ -27,7 +27,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   getRouter = store.getters.defaultRoutes; //获取路由数据
   let token = store.getters.token  //获取token
-  // let token = localStorage.getItem(token)  //获取token
+  // let token = sessionStorage.getItem('token')  //获取token
   if (to.path!='/' && !token) { //不加这个判断，路由会陷入死循环（是否登录）--未登录
     next('/');//登录页
   }else {
