@@ -78,6 +78,7 @@
           node-key="id"
           ref="tree"
           highlight-current
+          check-strictly
           :props="defaultProps">
         </el-tree>
       </div>

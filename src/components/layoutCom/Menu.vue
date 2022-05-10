@@ -56,13 +56,18 @@
 </template>
 
 <script>
-  import menu from "@/api/menu";
-
+  import { mapGetters } from "vuex";
   export default {
     name: "Menu",
+    computed: {
+      ...mapGetters({
+        menuListAll: "menuListAll" //获取菜单数据
+      }),
+    },
     data() {
       return {
         isCollapse: true,
+        // menuListAll:[],//菜单
         menuListOne: [],
         menuList: [
           {
@@ -101,7 +106,6 @@
     },
     created() {
       this.treeData()
-      // console.log(this.menuListOne)
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -112,46 +116,43 @@
       },
       //菜单选择【点击事件】
       menuSelect(index, indexPath) {
-
         this.$router.push(index)
       },
       //处理菜单树数据
       treeData(){
-        menu.getPermissionTree({}).then((res) => {
-          const list = res.data;
-          for (let i = 0; i < list.length; i++) {
-            if (list[i].name == "一级无子菜单") {
-              if (list[i].childMenus.length > 0) {
-                for (let j = 0; j < list[i].childMenus.length; j++) {
-                  this.menuListOne.push({
-                    index: "/" + list[i].path + "/" + list[i].childMenus[j].path,
-                    icon: list[i].childMenus[j].iconcls,
-                    name: list[i].childMenus[j].name,
-                    children: []
-                  })
-                }
+        const list = this.menuListAll;
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].name == "一级无子菜单") {
+            if (list[i].childMenus.length > 0) {
+              for (let j = 0; j < list[i].childMenus.length; j++) {
+                this.menuListOne.push({
+                  index: "/" + list[i].path + "/" + list[i].childMenus[j].path,
+                  icon: list[i].childMenus[j].iconcls,
+                  name: list[i].childMenus[j].name,
+                  children: []
+                })
               }
-            } else {
-              var zhongjian = []
-              if (list[i].childMenus.length > 0) {
-                for (let j = 0; j < list[i].childMenus.length; j++) {
-                  zhongjian.push({
-                    index: "/" + list[i].path + "/" + list[i].childMenus[j].path,
-                    icon: list[i].childMenus[j].iconcls,
-                    name: list[i].childMenus[j].name,
-                    children: []
-                  })
-                }
-              }
-              this.menuListOne.push({
-                index: "/" + list[i].path,
-                icon: list[i].iconcls,
-                name: list[i].name,
-                children: zhongjian
-              })
             }
+          } else {
+            var zhongjian = []
+            if (list[i].childMenus.length > 0) {
+              for (let j = 0; j < list[i].childMenus.length; j++) {
+                zhongjian.push({
+                  index: "/" + list[i].path + "/" + list[i].childMenus[j].path,
+                  icon: list[i].childMenus[j].iconcls,
+                  name: list[i].childMenus[j].name,
+                  children: []
+                })
+              }
+            }
+            this.menuListOne.push({
+              index: "/" + list[i].path,
+              icon: list[i].iconcls,
+              name: list[i].name,
+              children: zhongjian
+            })
           }
-        })
+        }
       }
     }
   }

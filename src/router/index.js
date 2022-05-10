@@ -99,14 +99,14 @@ function loadMenus (next, to){
     }
   ]
   router.addRoutes(childrenList) // 添加可访问路由表
-  console.log(childrenList);
+  // console.log(childrenList);
 
   //设置动态路由
   let asyncRouter = filterAsyncRouter(getRouter)
   router.addRoutes(asyncRouter) // 动态添加可访问路由表
-  console.log(asyncRouter);
+  // console.log(asyncRouter);
 
-  console.log(router)
+  // console.log(router)
   // next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
   next()
 }

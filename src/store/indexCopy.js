@@ -93,7 +93,7 @@ export default new Vuex.Store({
     //设置token等于外部传递进来的值
     setToken(state, token) {
       state.token = token
-      localStorage.token = token //同步存储token至localStorage
+      // localStorage.token = token //同步存储token至localStorage
     },
     //设置路由
     setChildren(state, list) {

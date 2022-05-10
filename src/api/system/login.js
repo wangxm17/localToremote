@@ -26,8 +26,11 @@ export default {
   },
 
   //退出方法
-  logout(){
-
+  loginOut(){
+    return request({
+      url: '/api/loginOut',
+      method: 'get'
+    })
   },
 
   //获取验证码
