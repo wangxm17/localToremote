@@ -1,12 +1,14 @@
 <template>
-  <div class="container">
-    <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
-    <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>
-<!--    <div class="left_center_map" id="mapJson" :style="{height:'400px',width:'100%'}"></div>-->
-    <div id="mapContainer" :style="{height:'400px',width:'100%'}"></div>
-<!--    <canvas id="canvas"/>-->
-<!--    <canvas id="name"/>-->
-  </div>
+  <el-container class="onlyOneBackground">
+    <el-main>
+      <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
+      <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>
+      <!--    <div class="left_center_map" id="mapJson" :style="{height:'400px',width:'100%'}"></div>-->
+      <div id="mapContainer" :style="{height:'400px',width:'100%'}"></div>
+      <!--    <canvas id="canvas"/>-->
+      <!--    <canvas id="name"/>-->
+    </el-main>
+  </el-container>
 </template>
 
 <script>
@@ -311,12 +313,6 @@
     width: 70%;
     height: 70%;
   }
-  .container {
-  // margin: 20px 0;
-    position: absolute;
-    text-align: center;
-    /*opacity: 0.2;*/
-    width: 100%;
   canvas {
     width: 100%;
     height: 100%;
@@ -328,6 +324,5 @@
     top: 0;
     left: 0;
     pointer-events: none;
-  }
   }
 </style>

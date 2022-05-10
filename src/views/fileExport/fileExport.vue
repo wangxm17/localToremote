@@ -1,58 +1,60 @@
 <template>
-  <section  style="background: #fff;">
-    <div style="text-align: right;padding-top:20px;padding-right: 40px;">
-      <el-button @click="toChoose()" type="button" class="el-button--primary">返回选择</el-button>
-      <el-button @click="exportWord()" type="button" class="el-button--primary">导出Word报告</el-button>
-      <el-button @click="exportPdf()" type="button" class="el-button--primary">导出Pdf报告</el-button>
-    </div>
-    <div class="word" style="width:90%;margin:0 auto;" id="word" ref="orderForm1">
-      <p class="bigTitle">{{fileName}}</p>
-      <p class="bigTitle">({{subtitle}})</p>
-      <!--文字-->
-      <div v-for="(item,index) in textData" :key="index" v-show="item.isShow">
-        <p class="subtitle">{{item.label}}</p>
-        <p class="content">{{item.content}}</p>
-        <div v-for="(item2,index2) in item.children" :key="index2" v-show="item2.isShow">
-          <p class="subSubtitle">{{item2.label}} </p>
-          <p class="Subcontent">{{item2.content}}</p>
+  <el-container class="cardBackground">
+    <el-main>
+      <div style="text-align: left;padding-top:20px;padding-right: 40px;">
+        <el-button @click="toChoose()" type="button" class="el-button--primary">返回选择</el-button>
+        <el-button @click="exportWord()" type="button" class="el-button--primary">导出Word报告</el-button>
+        <el-button @click="exportPdf()" type="button" class="el-button--primary">导出Pdf报告</el-button>
+      </div>
+      <div class="word" style="width:90%;margin:0 auto;" id="word" ref="orderForm1">
+        <p class="bigTitle">{{fileName}}</p>
+        <p class="bigTitle">({{subtitle}})</p>
+        <!--文字-->
+        <div v-for="(item,index) in textData" :key="index" v-show="item.isShow">
+          <p class="subtitle">{{item.label}}</p>
+          <p class="content">{{item.content}}</p>
+          <div v-for="(item2,index2) in item.children" :key="index2" v-show="item2.isShow">
+            <p class="subSubtitle">{{item2.label}} </p>
+            <p class="Subcontent">{{item2.content}}</p>
+          </div>
+        </div>
+        <!--表格-->
+        <div v-show="tableData.isShow">
+          <p class="subtitle">{{tableData.label}}</p>
+          <div v-show="tableData.children[0].isShow">
+            <p class="subSubtitle">{{tableData.children[0].label}} </p>
+            <table >
+              <thead>
+              <th>资产组合</th>
+              <th>占基金总资产比例（%）</th>
+              </thead>
+              <tr style="height: 80px;" >
+                <td colspan="2">暂无数据</td>
+              </tr>
+            </table>
+          </div>
+          <div v-show="tableData.children[1].isShow">
+            <p class="subSubtitle">{{tableData.children[1].label}}</p>
+            <table >
+              <thead>
+              <th>行业分类</th>
+              <th>占基金总资产比例（%）</th>
+              </thead>
+              <tbody v-if="(tableData.children[1].content).length!=0">
+              <tr v-for="item of tableData.children[1].content">
+                <td>{{item.name}}</td>
+                <td>{{(item.proportion*100).toFixed(2)}}</td>
+              </tr>
+              </tbody>
+              <tr v-else style="height: 80px;" >
+                <td colspan="2">暂无数据</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-      <!--表格-->
-      <div v-show="tableData.isShow">
-        <p class="subtitle">{{tableData.label}}</p>
-        <div v-show="tableData.children[0].isShow">
-          <p class="subSubtitle">{{tableData.children[0].label}} </p>
-          <table >
-            <thead>
-            <th>资产组合</th>
-            <th>占基金总资产比例（%）</th>
-            </thead>
-            <tr style="height: 80px;" >
-              <td colspan="2">暂无数据</td>
-            </tr>
-          </table>
-        </div>
-        <div v-show="tableData.children[1].isShow">
-          <p class="subSubtitle">{{tableData.children[1].label}}</p>
-          <table >
-            <thead>
-            <th>行业分类</th>
-            <th>占基金总资产比例（%）</th>
-            </thead>
-            <tbody v-if="(tableData.children[1].content).length!=0">
-            <tr v-for="item of tableData.children[1].content">
-              <td>{{item.name}}</td>
-              <td>{{(item.proportion*100).toFixed(2)}}</td>
-            </tr>
-            </tbody>
-            <tr v-else style="height: 80px;" >
-              <td colspan="2">暂无数据</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section >
+    </el-main>
+  </el-container>
 
 </template>
 
@@ -188,6 +190,13 @@
 </script>
 
 <style scoped>
+  .cardBackground{
+    margin: 1vh;
+    padding: 1vh 1vh 1vh 1vh;
+    background-color: #ffffff;
+    height: 89vh;
+    border-radius: 7px;
+  }
   .bigTitle{
     font-size:24px;line-height: 30px;text-align: center;
   }

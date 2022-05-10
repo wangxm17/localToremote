@@ -1,5 +1,5 @@
 <template>
-  <el-carousel :interval="4000" type="card" height="380px">
+  <el-carousel :interval="4000" type="card" height="48.7vh">
     <el-carousel-item v-for="item in imgList" :key="item.id">
       <img :src="item.idView" class="image">
     </el-carousel-item>
@@ -29,7 +29,7 @@
   .el-carousel__item .image {
     font-size: 14px;
     /*opacity: 0.75;*/
-    line-height: 300px;
+    line-height: 35vh;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -38,7 +38,7 @@
     color: rgb(248, 247, 245);
     font-size: 14px;
     opacity: 0.75;
-    line-height: 300px;
+    line-height: 35vh;
     margin: 0;
   }
 

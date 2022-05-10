@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <!--提交测试一下啊啊啊啊啊-->
-    <!--<video
+  <el-container class="onlyOneBackground">
+    <el-main>
+      <!--<video
       src="../assets/video/video1.mp4"
       :controls="videoOptions.controls"
       class="video-js vjs-big-play-centered vjs-fluid"
@@ -16,19 +16,13 @@
       autoplay="autoplay"
       ref="video">
     </video>-->
-
-    <div class="box">
-      <ul id="box">
-<!--        <li>158****546已购买1个月</li>-->
-<!--        <li>158****546已购买2个月</li>-->
-<!--        <li>158****546已购买3个月</li>-->
-<!--        <li>158****546已购买4个月</li>-->
-<!--        <li>158****546已购买5个月</li>-->
-<!--        <li>158****546已购买1个月</li>-->
-        <li v-for="item in 10">158****546已购买{{item}}个月</li>
-      </ul>
-    </div>
-  </div>
+      <div class="box">
+        <ul id="box">
+          <li v-for="item in 10">158****546已购买{{item}}个月</li>
+        </ul>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
@@ -147,29 +141,6 @@ export default {
 </script>
 
 <style scoped>
-  * {
-    font-size: 14px;
-  }
-  .drag-area {
-    height: 800px;
-    width: 800px;
-    background-color: #42b983;
-    border: dashed 1px gray;
-    margin-bottom: 10px;
-    color: #777;
-  }
-  .uploader-tips {
-    text-align: center;
-    height: 200px;
-    line-height: 200px;
-  }
-  .file-name {
-    text-align: center;
-    height: 200px;
-    line-height: 200px;
-  }
-
-
   .box{
     width: 300px;
     height: 200px;

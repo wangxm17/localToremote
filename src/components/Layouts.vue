@@ -10,7 +10,7 @@
         <Header style="margin-top: 20px"/>
       </el-header>
       <!--主内容-->
-      <el-main>
+      <el-main class="CardBackground">
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -93,7 +93,8 @@
 </script>
 
 <style>
-  .el-main{
+  .CardBackground{
     padding: 0px;
+    background-color: #f0f2f5;
   }
 </style>

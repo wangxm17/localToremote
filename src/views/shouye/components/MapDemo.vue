@@ -1,5 +1,5 @@
 <template>
-  <div class="left_center_map" id="mapJson" :style="{height:'380px',width:'100%'}"></div>
+  <div class="left_center_map" id="mapJson" :style="{height:'38vh',width:'57vh',padding:'1vh'}"></div>
 </template>
 
 <script>

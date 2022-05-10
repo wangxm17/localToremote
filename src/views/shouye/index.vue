@@ -1,22 +1,22 @@
 <template>
-    <div class="shouye-container">
+  <div class="shouye-container">
       <!--我是首页!!!!!!!-->
-
-      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;height: 45%">
-        <carousel-demo></carousel-demo>
-      </el-row>
-      <el-row style="margin-bottom:32px;height: 40%">
-        <el-col :span="8" class="downList">
-          <map-demo></map-demo>
-        </el-col>
-        <el-col :span="8" class="downList" style="margin-left: 2%">
-          <line-demo></line-demo>
-        </el-col>
-        <el-col :span="7" class="downList" style="margin-left: 2%">
-          <pie-demo></pie-demo>
-        </el-col>
-      </el-row>
+    <div class="topCard">
+      <carousel-demo></carousel-demo>
     </div>
+
+    <div class="downCard">
+      <div class="downList">
+        <map-demo></map-demo>
+      </div>
+      <div class="downList">
+        <line-demo></line-demo>
+      </div>
+      <div class="downList">
+        <pie-demo></pie-demo>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -34,14 +34,32 @@
 
 <style lang="scss" scoped>
   .shouye-container {
-    padding: 20px;
-    background-color: rgb(240, 242, 245);
-    height: 100%;
+    background-color: #f0f2f5;
+    height: 91.4vh;
+    overflow: hidden;
+    .topCard{
+      height: 51.5vh;
+      background: #ffffff;
+      margin: 1vh;
+      border-radius: 7px;
+      padding: 1vh 1vh 0vh 1vh;
+      /*width: 100%;*/
+    }
+    .downCard{
+      height: 36vh;
+      /*background: #ffffff;*/
+      margin: 1vh 1vh 1vh 1vh;
+      display: flex;
+      /*align-items: center;//上下垂直居中*/
+      justify-content: space-between;
+      /*width: 100%;*/
+      .downList{
+        background:#fff;
+        height: 100%;
+        width: 33%;
+        border-radius: 7px;
+      }
+    }
   }
-  .downList{
-    background:#fff;
-    padding:16px 16px 0;
-    height: 100%;
-    float: left;
-  }
+
 </style>

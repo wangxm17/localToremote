@@ -1,5 +1,5 @@
 <template>
-  <el-container class="AppBackground">
+  <el-container class="onlyOneBackground">
     <el-header style="text-align:center;">
       <p style="font-size:24px;">角色管理</p>
 <!--      <span>{{products}}</span>-->

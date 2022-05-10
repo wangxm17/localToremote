@@ -1,7 +1,11 @@
-.AppBackground{
-  padding: 20px;
-  /*background-color: rgb(240, 242, 245);*/
-  height: 100%;
+
+/*整块的背景*/
+.onlyOneBackground{
+  margin: 1vh;
+  padding: 1vh 5vh 1vh 5vh;
+  background-color: #ffffff;
+  height: 89vh;
+  border-radius: 7px;
 }
 .pagination{
   margin-top: 20px;

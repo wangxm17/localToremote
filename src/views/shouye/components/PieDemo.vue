@@ -1,5 +1,5 @@
 <template>
-  <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>
+  <div class="left_center_map" id="main" :style="{height:'38vh',width:'58vh',padding:'1vh'}"></div>
 </template>
 
 <script>

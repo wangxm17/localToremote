@@ -1,5 +1,5 @@
 <template>
-  <el-container class="AppBackground">
+  <el-container class="onlyOneBackground">
     <el-header style="text-align:center;">
       <p style="font-size:24px;">菜单管理</p>
     </el-header>
@@ -31,8 +31,8 @@
         default-expand-all
         :tree-props="{children: 'childMenus', hasChildren: 'hasChildren'}">
       >
-        <el-table-column type="index" align="center" label="序号"  width="60"></el-table-column>
-        <el-table-column prop="name" align="left" label="菜单名"></el-table-column>
+<!--        <el-table-column type="index" align="center" label="序号"  width="60"></el-table-column>-->
+        <el-table-column prop="name" label="菜单名"></el-table-column>
         <el-table-column  align="center" label="图标">
           <template slot-scope="scope">
             <i :class="scope.row.iconcls"/>

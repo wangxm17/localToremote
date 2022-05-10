@@ -113,6 +113,7 @@
   .allCard{
     background: #f0f2f5;
     padding: 1vh;
+    height: 89vh;
   }
 .headerSty{
   padding:1rem;
@@ -133,5 +134,6 @@
     background: #ffffff;
     padding:1rem;
     margin-top: 0.2rem;
+    height: 77vh;
   }
 </style>
