@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/components/Layouts'
 import store from '@/store/index'
-const _import = require('./_import_development.js') //获取组件的方法
+// const _import = require('./_import_development.js') //获取组件的方法
 
 Vue.use(Router)
 //公共路由
@@ -138,9 +138,9 @@ function filterAsyncRouter (asyncRouterMap) {
 // export const loadView = (view) => {
 //   return (resolve) => require([`@/views${view}`], resolve)
 // }
-export const loadView = (view) => { // 路由懒加载
-  return (resolve) =>  require([`@/views/${view}`], resolve)
-}
+// export const loadView = (view) => { // 路由懒加载
+//   return (resolve) =>  require([`@/views/${view}`], resolve)
+// }
 
 
 // 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
