@@ -36,17 +36,4 @@ const permission = {
   }
 }
 
-// 遍历后台传来的路由字符串，转换为组件对象
-function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
-
-}
-
-function filterChildren(childrenMap, lastRouter = false) {
-
-}
-
-export const loadView = (view) => {
-
-}
-
 export default permission

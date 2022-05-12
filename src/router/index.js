@@ -114,19 +114,19 @@ function loadMenus (next, to){
 //过滤路由
 function filterAsyncRouter (asyncRouterMap) {
   const accessedRouters = asyncRouterMap.filter(route => {
-    if (route.component) {
-      if (route.component === 'Layout') {
-        route.component = Layout
-      } else {
-        route.component = loadView(route.component) //字符串转为component组件
+    // if (route.component) {
+    //   if (route.component === Layout) {
+    //     route.component = Layout
+    //   } else {
+        // route.component = loadView(route.component) //字符串转为component组件
         // route.component = _import(route.component) //字符串转为component组件
         // console.log(route.component)
-      }
-    }
-    if (route.children && route.children.length) {
-      route.children = filterAsyncRouter(route.children)
-    }
-    return true
+  //     }
+  //   }
+  //   if (route.children && route.children.length) {
+  //     route.children = filterAsyncRouter(route.children)
+  //   }
+  //   return true
   })
   return accessedRouters
 }
@@ -144,13 +144,13 @@ function filterAsyncRouter (asyncRouterMap) {
 
 
 // 解决ElementUI导航栏中的vue-router在3.0版本以上重复点菜单报错问题
-const originalPush = Router.prototype.push
-Router.prototype.push = function push (location, onResolve, onReject) {
-  if (onResolve || onReject) {
-    return originalPush.call(this, location, onResolve, onReject)
-  }
-  return originalPush.call(this, location).catch(err => err)
-}
+// const originalPush = Router.prototype.push
+// Router.prototype.push = function push (location, onResolve, onReject) {
+//   if (onResolve || onReject) {
+//     return originalPush.call(this, location, onResolve, onReject)
+//   }
+//   return originalPush.call(this, location).catch(err => err)
+// }
 
 export default router;
 
