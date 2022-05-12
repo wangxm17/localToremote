@@ -5,7 +5,7 @@ import store from '@/store/index'
 // const _import = require('./_import_development.js') //获取组件的方法
 
 Vue.use(Router)
-//公共路由
+//公共路由11
 export const constanRoutes = [
   {
     path: '/',
