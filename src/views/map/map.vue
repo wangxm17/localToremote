@@ -1,17 +1,25 @@
 <template>
   <el-container class="onlyOneBackground">
     <el-main>
+      <!--选择器-->
       <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
+      <areas-select></areas-select>
+      <el-button>获取</el-button>
+      <!--统计图-->
       <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>
+      <!--地图-->
       <!--    <div class="left_center_map" id="mapJson" :style="{height:'400px',width:'100%'}"></div>-->
       <div id="mapContainer" :style="{height:'400px',width:'100%'}"></div>
       <!--    <canvas id="canvas"/>-->
       <!--    <canvas id="name"/>-->
+
+
     </el-main>
   </el-container>
 </template>
 
 <script>
+  import AreasSelect from '@/components/common/AreasSelect.vue'
   import * as d3geo from 'd3-geo'
   // import JSON from '@/assets/jiaxing.json'
   // import JSON from '@/assets/bengbu.json'
@@ -22,6 +30,9 @@
 
   export default {
     name: "maprwqr",
+    components: {
+      AreasSelect
+    },
     data() {
       return {
         options: provinceAndCityData,
@@ -30,10 +41,12 @@
         scene: null, // 场景
         camera: null, // 摄像机
         renderer: null, // 渲染器
-        map: null // 地图容器
+        map: null, // 地图容器
+        bindData:[],
       }
     },
     mounted() {
+      console.log(this.options)
       this.leftCenterMap()
       // this.leftCenterMap2()
       this.leftCenterMap3()
@@ -48,6 +61,9 @@
       // this.loop()
     },
     methods: {
+      huoqu(){
+        console.log(this.bindData)
+      },
       handleChange(value) {
         console.log(value)
       },

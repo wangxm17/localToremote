@@ -82,6 +82,10 @@ function loadMenus (next, to){
           path: 'map',
           name: '地图',
           component: () => import('@/views/map/map')
+        },{
+          path: 'dynamicBinding',
+          name: '参数动态绑定',
+          component: () => import('@/views/dynamicBinding/dynamicBinding')
         }
       ]
     },
