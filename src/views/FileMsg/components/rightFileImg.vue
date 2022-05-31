@@ -11,7 +11,7 @@
       :class="!item.isChecked ? 'active' : 'fileCardChecked'"
     >
       <img :src="item.icon" >
-      <p>{{item.name}}</p>
+      <p>{{item.label}}</p>
     </div>
   </div>
 </template>
@@ -36,6 +36,7 @@ export default {
         item.isChecked = false;
       })
       this.fileList[index].isChecked = true;
+      console.log(this.fileList[index].isChecked)
     },
     //右键菜单
     fileRightMenuShow(row,index){

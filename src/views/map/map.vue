@@ -1,25 +1,34 @@
 <template>
-  <el-container class="onlyOneBackground">
-    <el-main>
-      <!--选择器-->
+  <div style="height: 89vh;">
+    <!--选择器-->
+    <div class="cardBackground">
+      <Title titleName="地址选择器" type="type1"></Title>
       <el-cascader size="large" :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
+    </div>
+    <!--省份选择-->
+    <div class="cardBackground">
+      <Title titleName="省份选择" type="type2"></Title>
       <areas-select></areas-select>
-      <el-button>获取</el-button>
-      <!--统计图-->
-      <div class="left_center_map" id="main" :style="{height:'400px',width:'100%'}"></div>
-      <!--地图-->
-      <!--    <div class="left_center_map" id="mapJson" :style="{height:'400px',width:'100%'}"></div>-->
-      <div id="mapContainer" :style="{height:'400px',width:'100%'}"></div>
-      <!--    <canvas id="canvas"/>-->
-      <!--    <canvas id="name"/>-->
-
-
-    </el-main>
-  </el-container>
+    </div>
+    <!--统计图-->
+    <div class="cardBackground">
+      <Title titleName="统计图" type="type3"></Title>
+      <div class="left_center_map" id="main" :style="{height:'40vh',width:'100%'}"></div>
+    </div>
+    <!--地图-->
+    <div class="cardBackground">
+      <Title titleName="地图" type="type4"></Title>
+      <div id="mapContainer" :style="{height:'40vh',width:'100%'}"></div>
+    </div>
+    <!--    <div class="left_center_map" id="mapJson" :style="{height:'400px',width:'100%'}"></div>-->
+    <!--    <canvas id="canvas"/>-->
+    <!--    <canvas id="name"/>-->
+  </div>
 </template>
 
 <script>
   import AreasSelect from '@/components/common/AreasSelect.vue'
+  import Title from '@/components/common/Title.vue'
   import * as d3geo from 'd3-geo'
   // import JSON from '@/assets/jiaxing.json'
   // import JSON from '@/assets/bengbu.json'
@@ -31,7 +40,7 @@
   export default {
     name: "maprwqr",
     components: {
-      AreasSelect
+      AreasSelect,Title
     },
     data() {
       return {
@@ -46,7 +55,7 @@
       }
     },
     mounted() {
-      console.log(this.options)
+      // console.log(this.options)
       this.leftCenterMap()
       // this.leftCenterMap2()
       this.leftCenterMap3()
@@ -325,6 +334,12 @@
 </script>
 
 <style lang="scss" scoped>
+  .cardBackground{
+    margin: 1vh;
+    padding: 1vh 5vh 1vh 5vh;
+    background-color: #ffffff;
+    border-radius: 7px;
+  }
   #canvas {
     width: 70%;
     height: 70%;

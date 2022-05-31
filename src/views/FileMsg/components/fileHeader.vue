@@ -1,7 +1,7 @@
 <template>
   <div class="fileHeader">
     <!--返回上一级-->
-    <i class="el-icon-back"></i>
+    <i class="el-icon-back" @click="reBack"></i>
     <!--文件路径框-->
     <div class="fileUrl">
       <div v-for="(item,index) in fileUrlArr" :key="index" class="fileUrlItem"
@@ -34,7 +34,7 @@ export default {
     fileUrlArr:{ //文件路径--所有对象
       type:Array,
       default:[]
-    }
+    },
   },
   data () {
     return {
@@ -46,6 +46,7 @@ export default {
 
   },
   methods:{
+    //获取路径
     setFileUrl(){},
     //图标被选中事件
     async iconChecked(item,index){
@@ -61,6 +62,10 @@ export default {
         // this.$refs.fileListMenu.open()
       }
     },
+    //返回上一级
+    reBack(){
+      this.$emit('getFatherListById');
+    }
   }
 }
 </script>
