@@ -1,7 +1,7 @@
 <template>
   <div class="fileMsg">
     <!--文件管理抬头-->
-    <file-header :fileUrlArr="fileUrlArr" @getFatherListById="getFatherListById" class="header"></file-header>
+    <file-header :fileUrlArr="fileUrlArr" @selectByFatherId="selectByFatherId" @getFatherListById="getFatherListById" class="header"></file-header>
     <!--左侧树-->
     <el-col :span="4" class="leftTree">
       <left-tree :treeData="treeData" @selectByFatherId="selectByFatherId" class="leftTreeContent"></left-tree>
@@ -62,12 +62,13 @@
         fatherId:'',//记录右侧父级id
         imgOrTable: true,//图形形式|列表形式转换参数(默认是图片形式)
         operationObj: {},//操作对象
-        fileUrlArr: [  //文件路径--所有对象
+        fileUrlArr: [], //文件路径--所有对象
+        /*fileUrlArr: [  //文件路径--所有对象
           {id: '1', rightIcon: "el-icon-arrow-right", name: 'Users'},
           {id: '2', rightIcon: "el-icon-arrow-right", name: '82060'},
           {id: '3', rightIcon: "el-icon-arrow-right", name: 'Desktop'},
           {id: '4', rightIcon: "el-icon-arrow-right", name: 'ruoyi-ui'},
-        ],
+        ],*/
       }
     },
     watch:{
@@ -85,13 +86,26 @@
           this.fileList = res.data
           this.setFileIcon(this.fileList);//右侧文件--图形形式|列表形式--设置文件图标
           if(fatherId == '0') this.setFileTree(res.data);//左侧文件--只显示文件夹
+          this.getPathById();//获取路径
+        })
+      },
+      /******************头部*****************/
+      //通过id,获取路径
+      async getPathById(){
+        await file.getPathById(this.fatherId).then((res) => {
+          let newData = res.data;
+          for (let item in newData) {
+            this.$set(newData[item], 'rightIcon', "el-icon-arrow-right")
+          }
+          this.fileUrlArr = newData;
         })
       },
       //返回上一级
-      getFatherListById(){
+      async getFatherListById(){
         if(this.fatherId == "0") return
         file.getFatherListById(this.fatherId).then((res) => {
           this.fatherId = res.data[0].fatherid;
+          this.getPathById();//获取路径
           this.fileList = res.data
           this.setFileIcon(this.fileList);//右侧文件--图形形式|列表形式--设置文件图标
         })
@@ -99,6 +113,7 @@
       /******************左侧*****************/
       //左侧数据(只显示文件夹)
       setFileTree: function (newData) {
+        this.treeData = [];//置空
         for (let item in newData) {
           if(newData[item].type == 'dir'){
             this.treeData.push(newData[item])

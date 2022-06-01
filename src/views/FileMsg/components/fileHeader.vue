@@ -4,10 +4,10 @@
     <i class="el-icon-back" @click="reBack"></i>
     <!--文件路径框-->
     <div class="fileUrl">
-      <div v-for="(item,index) in fileUrlArr" :key="index" class="fileUrlItem"
+      <div v-for="(item,index) in fileUrlArr" :key="index" class="fileUrlItem" @click="textChecked(item,index)"
            :class="item.rightIcon!='el-icon-arrow-down' ? 'active' : 'fileUrlItemChecked'">
-        <span>{{item.name}}</span>
-        <i :class="item.rightIcon" @click="iconChecked(item,index)"></i>
+        <span>{{item.label}}</span>
+        <i :class="item.rightIcon" @click.stop="iconChecked(item,index)"></i>
       </div>
     </div>
     <!--搜索框-->
@@ -48,6 +48,11 @@ export default {
   methods:{
     //获取路径
     setFileUrl(){},
+    //文字点击
+    textChecked(item,index){
+      console.log(item);
+      this.$emit('selectByFatherId',item.id);
+    },
     //图标被选中事件
     async iconChecked(item,index){
       if(this.fileUrlArr[index].rightIcon == "el-icon-arrow-down"){
@@ -95,6 +100,7 @@ export default {
       align-items: center;//上下垂直居中
       border: transparent solid 0.5px;
       border-radius: 3px;
+      cursor: pointer;
       span{
         font-size: small;
         border-right: transparent solid 0.5px;
