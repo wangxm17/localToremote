@@ -7,7 +7,7 @@
       <div v-for="(item,index) in fileUrlArr" :key="index" class="fileUrlItem" @click="textChecked(item,index)"
            :class="item.rightIcon!='el-icon-arrow-down' ? 'active' : 'fileUrlItemChecked'">
         <span>{{item.label}}</span>
-        <i :class="item.rightIcon" @click.stop="iconChecked(item,index)"></i>
+        <i slot="reference"  :class="item.rightIcon" @click.stop="iconChecked(item,index)"></i>
       </div>
     </div>
     <!--搜索框-->
@@ -40,6 +40,7 @@ export default {
     return {
       fileUrl:'',//文件路径
       // fileUrlArr:[],//文件路径数组
+      visible: false,
     }
   },
   mounted() {
@@ -50,7 +51,6 @@ export default {
     setFileUrl(){},
     //文字点击
     textChecked(item,index){
-      console.log(item);
       this.$emit('selectByFatherId',item.id);
     },
     //图标被选中事件

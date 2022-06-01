@@ -25,4 +25,31 @@ export default {
     })
   },
 
+  //新增
+  insert(params){
+    return request({
+      url: `/api/File`,
+      method: 'post',
+      data:params
+    })
+  },
+
+  //编辑
+  updateByPrimaryKey(params){
+    return request({
+      url: `/api/File`,
+      method: 'put',
+      params
+    })
+  },
+
+  //删除
+  deleteByPrimaryKey(id){
+    return request({
+      url: `/api/File`,
+      method: 'delete',
+      data: id
+    })
+  }
+
 }
