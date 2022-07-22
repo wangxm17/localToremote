@@ -1,7 +1,7 @@
 <template>
   <el-container class="onlyOneBackground">
     <el-main>
-      <!--<video
+      <video
       src="../assets/video/video1.mp4"
       :controls="videoOptions.controls"
       class="video-js vjs-big-play-centered vjs-fluid"
@@ -15,7 +15,7 @@
       @seeking="seeking"
       autoplay="autoplay"
       ref="video">
-    </video>-->
+    </video>
       <div class="box">
         <ul id="box">
           <li v-for="item in 10">158****546已购买{{item}}个月</li>

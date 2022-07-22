@@ -11,7 +11,8 @@
       :class="!item.isChecked ? 'active' : 'fileCardChecked'"
     >
       <img :src="item.icon" >
-      <p>{{item.label}}</p>
+      <p v-show="!item.isReName">{{item.label}}</p>
+      <input v-show="item.isReName" v-model="item.label" ></input>
     </div>
   </div>
 </template>
@@ -34,9 +35,9 @@ export default {
     async cardChecked(index){
       await this.fileList.forEach(item => {
         item.isChecked = false;
+        // item.isReName = false;//只能重命名一个文件
       })
       this.fileList[index].isChecked = true;
-      console.log(this.fileList[index].isChecked)
     },
     //右键菜单
     fileRightMenuShow(row,index){
@@ -72,6 +73,10 @@ export default {
   p{
     text-align: center;
     font-size: 0.8rem;
+  }
+  input{
+    margin-top: 0.8rem;
+    width: 7rem;
   }
 }
 .fileCardChecked{

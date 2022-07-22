@@ -24,14 +24,14 @@
 
     <!--点击文件，出现右击菜单-->
     <Contextmenu ref="fileRightMenu" class="context-menu">
-      <li @click="test1" class="el-icon-view"><span>预览</span></li>
-      <li @click="test2" class="el-icon-edit"><span>重命名</span></li>
-      <li @click="cleanChecked" class="el-icon-delete"><span>删除</span></li>
+      <li @click="test1" class="el-icon-view" v-show="operationObj.type == 'file'"><span>预览</span></li> <!--1.是文件才能预览-->
+      <li @click="reName" class="el-icon-edit"><span>重命名</span></li>
+      <li @click="fileDel" class="el-icon-delete"><span>删除</span></li>
     </Contextmenu>
     <!--点击空白，出现右击菜单-->
     <Contextmenu ref="nullRightMenu" class="context-menu">
-      <li @click="test2" class="el-icon-refresh"><span>刷新</span></li>
-      <li @click="test1" class="el-icon-folder-add"><span>新建文件夹</span></li>
+      <li @click="selectByFatherId(fatherId)" class="el-icon-refresh"><span>刷新</span></li>
+      <li @click="addDirSubmit" class="el-icon-folder-add"><span>新建文件夹</span></li>
     </Contextmenu>
   </div>
 </template>
@@ -63,12 +63,6 @@
         imgOrTable: true,//图形形式|列表形式转换参数(默认是图片形式)
         operationObj: {},//操作对象
         fileUrlArr: [], //文件路径--所有对象
-        /*fileUrlArr: [  //文件路径--所有对象
-          {id: '1', rightIcon: "el-icon-arrow-right", name: 'Users'},
-          {id: '2', rightIcon: "el-icon-arrow-right", name: '82060'},
-          {id: '3', rightIcon: "el-icon-arrow-right", name: 'Desktop'},
-          {id: '4', rightIcon: "el-icon-arrow-right", name: 'ruoyi-ui'},
-        ],*/
       }
     },
     watch:{
@@ -129,19 +123,23 @@
           for (let key in fileIconKeyValue) {
             if (fileExtension == key) {
               let icon = fileIconKeyValue[key]
-              this.$set(newData[item], 'icon', require('@/assets/file/' + icon))
+              this.$set(newData[item], 'icon', require('@/assets/file/' + icon));//图标
               this.$set(newData[item], 'isChecked', false) //是否选中状态
+              this.$set(newData[item], 'isReName', false) //是否选中状态
             }
           }
         }
         return newData;
       },
-      //右侧文件--图形形式--点击空白，置空图片选中状态
-      cleanChecked() {
+      //右侧--点击空白
+      async cleanChecked() {
+        await this.reNameSubmit();
         this.fileList.forEach(item => {
-          item.isChecked = false;
+          item.isChecked = false; //是否选中
+          item.isReName = false; //重命名
         })
       },
+      /***双击文件***/
       //双击---文件夹点进去
       fileDirDblclick(param) {
         if (param.type == "dir") {
@@ -151,15 +149,62 @@
           return
         }
       },
-      //点击空白，出现右击菜单
+      /***右击空白***/
+      //----右击空白，出现右击菜单
       nullRightMenuShow() {
         this.cleanChecked();
         this.$refs.nullRightMenu.open()
       },
-      //点击文件，出现右击菜单
+      //----新增文件夹
+      addDirSubmit(){
+        let params = {
+          fatherId: this.fatherId,
+          label: "新建文件夹.dir",
+          size: "200kb",
+          type: "dir",
+        }
+        file.insert(params).then((res) => {
+          // this.operationObj = res.data;//操作对象
+          this.selectByFatherId(this.fatherId);//查询
+        })
+      },
+      /***右击文件***/
+      //右击文件，出现右击菜单
       fileRightMenuShow(param) {
-        this.operationObj = param;
+        this.operationObj = param;//操作对象
         this.$refs.fileRightMenu.open()
+        // console.log(this.operationObj,"jgrhgwrjnkdgsn")
+      },
+      //----重命名输入框显示
+      reName(){
+        // console.log("打算重命名")
+        this.operationObj.isReName = true;//显示重命名下方的输入框
+      },
+      //--重命名提交
+      reNameSubmit(){
+        // console.log("提交")
+        // console.log(this.operationObj)
+        if(!this.operationObj.isReName) return;
+        file.updateByPrimaryKey(this.operationObj).then((res) => {
+          // this.$message.success("重命名成功！");
+          this.selectByFatherId(this.fatherId);//查询
+        })
+      },
+      //--删除文件
+      fileDel(){
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          console.log(this.operationObj)
+          file.deleteByPrimaryKey(this.operationObj.id).then((res) => {
+            this.$message({type: 'success', message: '删除成功!'});
+            this.selectByFatherId(this.fatherId);//查询
+          })
+        }).catch(() => {
+          this.$message({type: 'info', message: '已取消删除'});
+        });
       },
       /******************页尾*****************/
       //页尾--图形形式|列表形式转换方法

@@ -39,16 +39,15 @@ export default {
     return request({
       url: `/api/File`,
       method: 'put',
-      params
+      data: params
     })
   },
 
   //删除
   deleteByPrimaryKey(id){
     return request({
-      url: `/api/File`,
-      method: 'delete',
-      data: id
+      url: `/api/File?id=`+id,
+      method: 'delete'
     })
   }
 

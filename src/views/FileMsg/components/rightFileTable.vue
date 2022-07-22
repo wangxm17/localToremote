@@ -12,7 +12,8 @@
     <el-table-column label="名称" prop="name" align="left" :render-header="renderHeader" sortable="custom" width="300">
       <template slot-scope="scope" style="vertical-align: middle;position: relative;">
         <img :src="scope.row.icon" style="width: 20px;margin: 0;position: absolute;top: 6px;">
-        <span style="color: #232222;margin-left: 25px;line-height: 24px;position: absolute;top: 6px;">{{scope.row.label}}</span>
+        <span style="color: #232222;margin-left: 25px;line-height: 24px;position: absolute;top: 6px;" v-show="!scope.row.isReName">{{scope.row.label}}</span>
+        <input style="margin-left: 25px;line-height: 24px;position: absolute;top: 6px;" v-show="scope.row.isReName" v-model="scope.row.label" ></input>
       </template>
     </el-table-column>
     <el-table-column label="修改日期" prop="update" align="left" width="160"></el-table-column>
