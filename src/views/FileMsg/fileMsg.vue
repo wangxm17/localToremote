@@ -231,7 +231,7 @@
         if (file.size > (10 * 1000 * 1000)) {
           return alert('文件大小不能超过10M')
         }
-        console.log(iconKeyValue)
+        // console.log(iconKeyValue)
         // this.imgListOne.push({
         //   id:'',
         //   name:file.name,

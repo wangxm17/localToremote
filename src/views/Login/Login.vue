@@ -186,65 +186,6 @@
         })
       },
       toIndex() {
-        //动态从后端获取路由---假装从后台取的，后期再写接口
-        var testArr=[
-          {
-            path: '/index',
-            name: '系统管理',
-            component: 'Layout',
-            children: [
-              {
-                path: 'fileMsg',
-                name: '我的文件',
-                component: 'FileMsg/fileMsg'
-              },
-              {
-                path: 'fileChoose',
-                name: '目录选择',
-                component: 'fileExport/fileChoose'
-              },
-              {
-                path: 'fileExport',
-                name: '文件导出',
-                component: 'fileExport/fileExport'
-              },
-              {
-                path: 'user',
-                name: '用户表',
-                component: 'User/userTable'
-              },
-              {
-                path: 'role',
-                name: '角色表',
-                component: 'Role/roleTable'
-              },
-              {
-                path: 'menu',
-                name: '菜单表',
-                component: 'Menu/menuTable'
-              },
-              {
-                path: 'map',
-                name: '地图',
-                component: 'map/map'
-              }
-            ]
-          },
-          {
-            path: '/One',
-            name: '一级无子菜单',
-            component: 'Layout',
-            children: [
-              {
-                path: 'shouye',
-                name: '首页',
-                component: 'shouye/index'
-              }
-            ]
-          }
-        ]
-        //设置路由数据
-        this.$store.commit('SET_DEFAULT_ROUTES', testArr);
         //跳转到首页
         this.$router.push({path: '/One/shouye', query: this.otherQuery})
       }

@@ -52,14 +52,14 @@ export default {
     // 播放回调
     seeking(player){
       // this.globalSetting = true
-      console.log("player play!", player);
+      // console.log("player play!", player);
       // document.getElementsByClassName("vjs-control-bar").style.display = "block";
       // document.getElementsByClassName("vjs-control-bar").style.display = "block";
     },
     // 播放回调
     onPlayerPlay(player){
       // this.globalSetting = true
-      console.log("player play!", player);
+      // console.log("player play!", player);
       // document.getElementsByClassName("vjs-control-bar").style.display = "block";
       // document.getElementsByClassName("vjs-control-bar").style.display = "block";
     },

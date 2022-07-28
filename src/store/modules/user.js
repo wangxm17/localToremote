@@ -13,7 +13,8 @@ const user = {
 
   mutations: {
     SET_TOKEN: (state, token) => {
-      state.token = token
+      state.token = token;
+      sessionStorage.setItem('token',token);
     },
     SET_NAME: (state, name) => {
       state.name = name
@@ -28,7 +29,9 @@ const user = {
       state.permissions = permissions
     },
     SET_MENU: (state, menu) => {
-      state.menu = menu
+      state.menu = menu;
+      // state.menu = JSON.parse(menu);
+      // sessionStorage.setItem('menu',JSON.stringify(menu));
     },
     SET_USER: (state, userInfo) => {
       state.userInfo = userInfo
@@ -46,7 +49,7 @@ const user = {
       return new Promise((resolve, reject) => {
         login.login(params).then(res => {
           if(res.code == 0){
-            setToken(res.data)
+            // setToken(res.data)
             // console.log(getToken('Admin-Token'))
             commit('SET_TOKEN', res.data.token);//tokon
             commit('SET_MENU', res.data.userInfo.menu);//菜单
